@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">CollageStudent</string>
+    <string name="sname">Enter Name</string>
+    <string name="sroll">Enter Roll No.</string>
+    <string name="semail">Enter Email</string>
+    <string name="sphone">Enter Phone</string>
+    <string name="sdivsion">Enter Division</string>
+    <string name="sdepartment">Enter Department</string>
+    <string name="sclass">Enter Class and Division</string>
+    <string name="percent">Enter Previous %</string>
+    <string name="catagory">Enter Category</string>
+    <string name="pcontact">Enter Parent"'"s Contact</string>
+    <string name="scontact">Enter Student Contact</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="btn_link_to_register">Not a member? Please Sign-up!</string>
+    <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="action_sign_in_short">Register</string>
+
+    <string name="sign_out">Sign Out</string>
+    <string name="hint_phone_number">Enter Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+
+</resources>

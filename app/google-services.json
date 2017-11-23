@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "150039486125",
+    "firebase_url": "https://shahu-cet-cell.firebaseio.com",
+    "project_id": "shahu-cet-cell",
+    "storage_bucket": "shahu-cet-cell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150039486125:android:43b53ed1e15b3526",
+        "android_client_info": {
+          "package_name": "com.resoneuronance.shahucetcell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150039486125-063u2i4lhvascnvm2aobad0k9p2t6kb9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.resoneuronance.shahucetcell",
+            "certificate_hash": "4b5ec6957caa3deb041e6ba7a0b26a1281ae04f1"
+          }
+        },
+        {
+          "client_id": "150039486125-s2hortemtgdpujltoacdqicpu6m62fnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_sQz1U-P_NlUKIsdA6--ai7rBasI7MWU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150039486125-s2hortemtgdpujltoacdqicpu6m62fnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

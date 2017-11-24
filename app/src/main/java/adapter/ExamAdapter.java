@@ -36,7 +36,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> {
     public View getView(final int position, View view, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.noticerow, null, true);
+        View rowView = inflater.inflate(R.layout.exam_row_layout, null, true);
 
         TextView txtexam = (TextView) rowView.findViewById(R.id.examshow);
         Button btnomr=(Button)rowView.findViewById(R.id.omrshow);

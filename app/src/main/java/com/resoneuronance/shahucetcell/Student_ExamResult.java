@@ -52,7 +52,7 @@ public class Student_ExamResult extends Fragment {
 
 
 
-        final ListenerRegistration docRef = db.collection("Students").document("1601007").collection("Notices")
+        final ListenerRegistration docRef = db.collection("Students").document("1601007").collection("Exams")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                     @Override

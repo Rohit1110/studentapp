@@ -7,20 +7,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
+ <ListView
+     android:id="@+id/listnotice"
+     android:layout_width="match_parent"
+     android:layout_height="0dip"
+     android:layout_weight="8"
+     android:layout_marginLeft="7dip"
+     android:layout_marginRight="7dip"
+     android:background="@color/white"
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:background="@color/colorAccent"
-        android:text="Amol was absent 3 days from 11-11-2017 to 21-11-2017"/>
+     android:dividerHeight="5.0sp"
+     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:background="@color/colorAccent"
-        android:text="Amol was absent 3 days from 11-11-2017 to 21-11-2017"/>
+ </ListView>
 
 
 </LinearLayout>

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +48,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     String mVerificationId;
 
     private static final String TAG = "PhoneAuthActivity";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,7 +108,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             SharedPreferences sp=getSharedPreferences("user",0);
                             SharedPreferences.Editor edit=sp.edit();
 
-                            edit.putString("userphone",user.getUid()+"");
+                            edit.putString("userphone",user.getPhoneNumber());
                             edit.commit();
 
                             startActivity(new Intent(PhoneAuthActivity.this, MainActivity.class));

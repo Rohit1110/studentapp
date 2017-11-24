@@ -21,7 +21,8 @@
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
     <string name="action_sign_in_short">Register</string>
-
+     <string name="btn_edit">Edit</string>
+    <string name="btn_update">Update</string>
     <string name="sign_out">Sign Out</string>
     <string name="hint_phone_number">Enter Phone Number</string>
     <string name="hint_verification_code">Verification Code</string>

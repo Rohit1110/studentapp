@@ -6,23 +6,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
+import model.Sprofile;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,28 +40,45 @@ import static android.content.ContentValues.TAG;
 
 public class Student_Profile extends Fragment {
 
-    FirebaseAuth mFirebaseAuth;
-    FirebaseUser mFirebaseUser;
-    private DatabaseReference mDatabase;
-    private String mUserId;
+   EditText name,scontact,category,pcontact,sclass,roll,ppercent;
+   Button update,edit;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Sprofile sprofile;
+    String phone;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_profile, container, false);
+        View rootView = inflater.inflate(R.layout.layout_profile, container, false);
 
+
+
+        name=(EditText)rootView.findViewById(R.id.sname);
+        roll=(EditText)rootView.findViewById(R.id.sroll);
+        scontact=(EditText)rootView.findViewById(R.id.scontact);
+        category=(EditText)rootView.findViewById(R.id.scatagory);
+        pcontact=(EditText)rootView.findViewById(R.id.pcontact);
+        sclass=(EditText)rootView.findViewById(R.id.scalss);
+        ppercent=(EditText)rootView.findViewById(R.id.spercent);
+
+
+
+        return rootView;
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sp=getContext().getSharedPreferences("user",0);
-        String phone=sp.getString("userphone",null);
+        SharedPreferences sp=this.getActivity().getSharedPreferences("user",0);
+        phone=sp.getString("userphone","");
         Log.v("SSSS",phone);
 
-        db.collection("cities")
+
+
+        db.collection("Students")
                 .whereEqualTo("StudentContact", phone)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -67,12 +88,53 @@ public class Student_Profile extends Fragment {
                             for (DocumentSnapshot document : task.getResult()) {
                                 Log.d("Data", document.getId() + " => " + document.getData());
                                 Log.d("Name", document.getId() + " => " + document.getData().get("Name"));
+                                String name=document.getData().get("Name").toString();
+                                String category=document.getData().get("Category").toString();
+                                String sclass =document.getData().get("Class").toString();
+                                String div=document.getData().get("Div").toString();
+                                String parentcontact=document.getData().get("ParentContact").toString();
+                                String studentcontact=document.getData().get("StudentContact").toString();
+                                String rollno=document.getData().get("RollNo").toString();
+                                String  PrePercent=document.getData().get("PrePercent").toString();
+
+
+                                sprofile=new  Sprofile(studentcontact,category,PrePercent,parentcontact,sclass,rollno,name,div);
+
+
+
+
+
                             }
+                            updatetext();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
+
+                    private void updatetext() {
+
+                      name.setText(sprofile.getName());
+                        roll.setText(sprofile.getRollNo());
+                        category.setText(sprofile.getCategory());
+                        sclass.setText(sprofile.getStudclass()+" "+sprofile.getDiv());
+                        ppercent.setText(sprofile.getPrePercent());
+                        pcontact.setText(sprofile.getParentContact());
+                        scontact.setText(sprofile.getStudentContact());
+
+
+
+
+
+
+
+                        Toast.makeText(getActivity(),sprofile.getPrePercent()+sprofile.getParentContact(),Toast.LENGTH_LONG).show();
+
+
+                    }
                 });
     }
+
+
+
 }
 

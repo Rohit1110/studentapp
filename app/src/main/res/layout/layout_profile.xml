@@ -21,44 +21,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sname"
-            android:hint="@string/sname">
+            android:hint="@string/sname"
+            android:editable="false">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sroll"
-            android:hint="@string/sroll">
+            android:hint="@string/sroll"
+            android:editable="false">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scalss"
-            android:hint="@string/sclass">
+            android:hint="@string/sclass"
+            android:editable="false">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spercent"
-            android:hint="@string/percent">
+            android:hint="@string/percent"
+            android:editable="false">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scatagory"
-            android:hint="@string/catagory">
+            android:hint="@string/catagory"
+            android:editable="false">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scontact"
-            android:hint="@string/scontact">
+            android:hint="@string/scontact"
+            android:editable="false">
 
         </EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pcontact"
+            android:hint="@string/scontact"
+            android:editable="false">
+
+        </EditText>
+
+
     </LinearLayout>
+
 </FrameLayout>
 

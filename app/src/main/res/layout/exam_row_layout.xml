@@ -1,0 +1,37 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dip"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/examshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="30dp"
+        android:textStyle="bold"
+        android:text="Exam Name"
+
+        android:gravity="center"/>
+
+   <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/omrshow"
+       android:gravity="center"
+       android:text="OMR Sheet"
+       android:layout_toRightOf="@+id/notice"
+       />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/psolshow"
+        android:gravity="center"
+        android:text="OMR Sheet"
+
+        android:layout_toRightOf="@+id/omrshow"
+        />
+</RelativeLayout>

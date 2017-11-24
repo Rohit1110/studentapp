@@ -38,7 +38,7 @@ public class Student_ExamResult extends Fragment {
     private ListView list;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.layout_inbox, container, false);
+        View rootView = inflater.inflate(R.layout.layout_examresult, container, false);
         list=(ListView)rootView.findViewById(R.id.listexam);
         return rootView;
     }

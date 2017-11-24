@@ -21,6 +21,7 @@ import com.resoneuronance.shahucetcell.R;
 import java.util.ArrayList;
 
 import adapter.CustomAdapter;
+import adapter.ExamAdapter;
 import model.Exam;
 import model.Notice;
 import model.Sprofile;
@@ -72,7 +73,7 @@ public class Student_ExamResult extends Fragment {
                         }
                         /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_list_item_1, notices));*/
-                        CustomAdapter adapter = new CustomAdapter(getActivity(), exams);
+                        ExamAdapter adapter = new ExamAdapter(getActivity(), exams);
                         list.setAdapter(adapter);
                     }
                 });

@@ -1,6 +1,8 @@
 package com.resoneuronance.shahucetcell;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,9 +41,10 @@ import static android.content.ContentValues.TAG;
 
 
 public class Student_Profile extends Fragment {
+    ProgressDialog proDialog;
 
    EditText name,scontact,category,pcontact,sclass,roll,ppercent;
-   Button update,edit;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Sprofile sprofile;
     String phone;
@@ -71,6 +74,10 @@ public class Student_Profile extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        proDialog = new ProgressDialog(getContext());
+        proDialog.setMessage("please wait....");
+        proDialog.setCancelable(false);
+        proDialog.show();
 
         SharedPreferences sp=this.getActivity().getSharedPreferences("user",0);
         phone=sp.getString("userphone","");
@@ -84,7 +91,9 @@ public class Student_Profile extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        proDialog.dismiss();
                         if (task.isSuccessful()) {
+
                             for (DocumentSnapshot document : task.getResult()) {
                                 Log.d("Data", document.getId() + " => " + document.getData());
                                 Log.d("Name", document.getId() + " => " + document.getData().get("Name"));
@@ -97,6 +106,10 @@ public class Student_Profile extends Fragment {
                                 String rollno=document.getData().get("RollNo").toString();
                                 String  PrePercent=document.getData().get("PrePercent").toString();
 
+                                SharedPreferences preferences = getActivity().getSharedPreferences("pref", 0);
+                                SharedPreferences.Editor editor=preferences.edit();
+                                editor.putString("rollno",document.getData().get("RollNo").toString());
+                                editor.commit();
 
                                 sprofile=new  Sprofile(studentcontact,category,PrePercent,parentcontact,sclass,rollno,name,div);
 
@@ -120,15 +133,6 @@ public class Student_Profile extends Fragment {
                         ppercent.setText(sprofile.getPrePercent());
                         pcontact.setText(sprofile.getParentContact());
                         scontact.setText(sprofile.getStudentContact());
-
-
-
-
-
-
-
-                        Toast.makeText(getActivity(),sprofile.getPrePercent()+sprofile.getParentContact(),Toast.LENGTH_LONG).show();
-
 
                     }
                 });

@@ -10,28 +10,44 @@
         android:id="@+id/examshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginLeft="30dp"
-        android:textStyle="bold"
+
+        android:layout_alignBottom="@+id/omrshow"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:gravity="center"
         android:text="Exam Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        android:gravity="center"/>
-
-   <Button
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:id="@+id/omrshow"
-       android:gravity="center"
-       android:text="OMR Sheet"
-       android:layout_toRightOf="@+id/notice"
-       />
     <Button
+        android:id="@+id/omrshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/psolshow"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
         android:gravity="center"
-        android:text="OMR Sheet"
+        android:text="OMR Sheet" />
 
-        android:layout_toRightOf="@+id/omrshow"
+    <Button
+        android:id="@+id/psolshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignLeft="@+id/omrshow"
+        android:layout_alignStart="@+id/omrshow"
+        android:layout_below="@+id/examshow"
+        android:gravity="center"
+        android:text="Paper Solution" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
         />
 </RelativeLayout>

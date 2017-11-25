@@ -25,18 +25,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 Student_Inbox tab2 = new Student_Inbox();
                 return tab2;
+
             case 2:
-                Student_Progress tab3 = new Student_Progress();
-                return tab3;
-            case 3:
                 Student_ExamResult tab4 = new Student_ExamResult();
                 return tab4;
-            case 4:
-                Student_PaperSolution tab5 = new Student_PaperSolution();
-                return tab5;
-            case 5:
-                Student_OMRSheet tab6 = new Student_OMRSheet();
-                return tab6;
+            case 3:
+                Student_Progress tab3 = new Student_Progress();
+                return tab3;
+
             default:
                 return null;
         }

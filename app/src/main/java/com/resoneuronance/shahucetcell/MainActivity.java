@@ -21,10 +21,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));
         tabLayout.addTab(tabLayout.newTab().setText("INBOX"));
-        tabLayout.addTab(tabLayout.newTab().setText("PAPER SOLUTION"));
         tabLayout.addTab(tabLayout.newTab().setText("EXAM RESULT"));
         tabLayout.addTab(tabLayout.newTab().setText("PROGRESS"));
-        tabLayout.addTab(tabLayout.newTab().setText("OMR SHEET"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 

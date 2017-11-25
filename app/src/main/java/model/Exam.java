@@ -10,6 +10,7 @@ public class Exam {
     private  String total;
     private  String OMR;
     private  String PSolution;
+    private String progressReport;
 
     public String getTestName() {
         return testName;
@@ -41,5 +42,13 @@ public class Exam {
 
     public void setPSolution(String PSolution) {
         this.PSolution = PSolution;
+    }
+
+    public String getProgressReport() {
+        return progressReport;
+    }
+
+    public void setProgressReport(String progressReport) {
+        this.progressReport = progressReport;
     }
 }

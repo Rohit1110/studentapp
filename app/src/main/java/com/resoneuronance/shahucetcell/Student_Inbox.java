@@ -1,6 +1,9 @@
 package com.resoneuronance.shahucetcell;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -39,6 +43,7 @@ public class Student_Inbox extends Fragment {
     String Roll;
     private ArrayList<Notice> notices;
     private ListView list;
+    ProgressDialog proDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,16 +56,25 @@ public class Student_Inbox extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Sprofile sprofile=new Sprofile();
+
+        proDialog = new ProgressDialog(getContext());
+        proDialog.setMessage("please wait....");
+        proDialog.setCancelable(false);
+        proDialog.show();
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        String roll=preferences.getString("rollno","");
 
 
 
 
-        final ListenerRegistration docRef = db.collection("Students").document("1601007").collection("Notices")
+
+        final ListenerRegistration docRef = db.collection("Students").document(roll).collection("Notices")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        proDialog.dismiss();
                         if (e != null) {
                             Log.w(TAG, "Listen failed.", e);
                             return;

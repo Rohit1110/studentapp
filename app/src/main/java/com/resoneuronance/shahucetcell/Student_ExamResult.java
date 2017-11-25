@@ -1,5 +1,8 @@
 package com.resoneuronance.shahucetcell;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,6 +41,7 @@ public class Student_ExamResult extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Exam> exams;
     private ListView list;
+    ProgressDialog proDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_examresult, container, false);
@@ -48,15 +53,24 @@ public class Student_ExamResult extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        proDialog = new ProgressDialog(getContext());
+        proDialog.setMessage("please wait....");
+        proDialog.setCancelable(false);
+        proDialog.show();
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        String roll=preferences.getString("rollno","");
 
 
 
 
-        final ListenerRegistration docRef = db.collection("Students").document("1601007").collection("Exams")
+
+        final ListenerRegistration docRef = db.collection("Students").document(roll).collection("Exams")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        proDialog.dismiss();
                         if (e != null) {
                             Log.w(TAG, "Listen failed.", e);
                             return;

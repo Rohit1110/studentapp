@@ -4,6 +4,7 @@ package com.resoneuronance.shahucetcell;
  * Created by Rohit on 11/23/2017.
  */
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     EditText mPhoneNumberField, mVerificationField;
     Button mStartButton, mVerifyButton, mResendButton;
+    ProgressDialog proDialog;
 
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -125,6 +127,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
 
     private void startPhoneNumberVerification(String phoneNumber) {
+        proDialog.dismiss();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -174,6 +177,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 if (!validatePhoneNumber()) {
                     return;
                 }
+                proDialog = new ProgressDialog(this);
+                proDialog.setMessage("please wait....");
+                proDialog.setCancelable(false);
+                proDialog.show();
                 startPhoneNumberVerification(mPhoneNumberField.getText().toString());
                 break;
             case R.id.button_verify_phone:

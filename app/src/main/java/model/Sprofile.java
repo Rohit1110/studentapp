@@ -16,13 +16,14 @@ public class Sprofile {
     private  String RollNo;
     private  String Name;
     private  String Div;
+    private  String profile;
 
 
 
     public Sprofile() {
     }
 
-    public Sprofile(String studentContact, String category, String prePercent, String parentContact, String studclass1, String rollNo, String name, String div) {
+    public Sprofile(String studentContact, String category, String prePercent, String parentContact, String studclass1, String rollNo, String name, String div, String profilephoto) {
         StudentContact = studentContact;
         Category = category;
         PrePercent = prePercent;
@@ -31,6 +32,7 @@ public class Sprofile {
         RollNo = rollNo;
         Name = name;
         Div = div;
+        profile=profilephoto;
 
     }
 
@@ -66,5 +68,6 @@ public class Sprofile {
     public String getDiv() {
         return Div;
     }
+    public String getProfile(){return  profile;}
 
 }

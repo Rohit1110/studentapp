@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="@string/verify_phone_auth"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
+                android:theme="@style/AppTheme" />
 
             <Button
                 android:id="@+id/button_resend"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="@string/resend_phone_auth"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
+                android:theme="@style/AppTheme" />
         </LinearLayout>
 
     </LinearLayout>

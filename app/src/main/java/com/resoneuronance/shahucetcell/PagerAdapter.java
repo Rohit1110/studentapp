@@ -3,9 +3,10 @@ package com.resoneuronance.shahucetcell;
 /**
  * Created by Rohit on 11/23/2017.
  */
-        import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentManager;
-        import android.support.v4.app.FragmentStatePagerAdapter;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -17,25 +18,30 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        System.out.println("Position of fragment" + position);
+
+        Fragment tab = null;
 
         switch (position) {
             case 0:
-                Student_Profile tab1 = new Student_Profile();
-                return tab1;
+                tab = new Student_Profile();
+                break;
             case 1:
-                Student_Inbox tab2 = new Student_Inbox();
-                return tab2;
+                tab = new Student_Inbox();
+                break;
 
             case 2:
-                Student_ExamResult tab4 = new Student_ExamResult();
-                return tab4;
+                tab = new Student_ExamResult();
+                break;
             case 3:
-                Student_Progress tab3 = new Student_Progress();
-                return tab3;
+                tab = new Student_Progress();
+                break;
 
             default:
-                return null;
+                tab = new Student_Profile();
+                break;
         }
+        return tab;
     }
 
     @Override

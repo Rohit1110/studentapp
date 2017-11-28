@@ -106,7 +106,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = task.getResult().getUser();
                             user.getPhoneNumber();
-                            Log.d(TAG, "Phome "+user.getPhoneNumber());
+                            Log.d("SSSS######", "Phome "+user.getPhoneNumber());
                             SharedPreferences sp=getSharedPreferences("user",0);
                             SharedPreferences.Editor edit=sp.edit();
 
@@ -174,13 +174,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_start_verification:
-                if (!validatePhoneNumber()) {
-                    return;
-                }
                 proDialog = new ProgressDialog(this);
                 proDialog.setMessage("please wait....");
                 proDialog.setCancelable(false);
                 proDialog.show();
+                if (!validatePhoneNumber()) {
+                    return;
+                }
+
                 startPhoneNumberVerification(mPhoneNumberField.getText().toString());
                 break;
             case R.id.button_verify_phone:

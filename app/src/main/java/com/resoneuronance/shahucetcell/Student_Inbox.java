@@ -1,8 +1,10 @@
 package com.resoneuronance.shahucetcell;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -30,6 +32,7 @@ import java.util.Date;
 import adapter.CustomAdapter;
 import model.Notice;
 import model.Sprofile;
+import utils.Utility;
 
 import static android.content.ContentValues.TAG;
 
@@ -44,11 +47,15 @@ public class Student_Inbox extends Fragment {
     private ArrayList<Notice> notices;
     private ListView list;
     ProgressDialog proDialog;
+    private ListenerRegistration docRef;
+    private String roll;
+    private Utility utility;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_inbox, container, false);
-        list=(ListView)rootView.findViewById(R.id.listnotice);
+        list = (ListView) rootView.findViewById(R.id.listnotice);
         return rootView;
 
     }
@@ -57,45 +64,88 @@ public class Student_Inbox extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        //createListener(roll);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        createListener(roll);
+    }
+
+    private void createListener(String roll) {
+        utility = new Utility();
+
         proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);
-        proDialog.show();
+
 
         SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        String roll=preferences.getString("rollno","");
+        roll = preferences.getString("rollno", "");
 
 
+        System.out.println("################ ROLL NO IN INBOX:" + roll);
 
+        if (roll != null && roll.trim().length() > 0) {
+           if (docRef == null && roll != null && roll.trim().length() > 0) {
+               try {
+                   proDialog.show();
+                   docRef = db.collection("Students").document(roll).collection("Notices")
+                           .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
+                               @Override
+                               public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                                   proDialog.dismiss();
+                                   if (e != null) {
+                                       Log.w(TAG, "Listen failed.", e);
+                                       return;
+                                   }
 
-        final ListenerRegistration docRef = db.collection("Students").document(roll).collection("Notices")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        proDialog.dismiss();
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-
-                         notices = new ArrayList<Notice>();
-                        for (DocumentSnapshot doc : documentSnapshots) {
-                            Notice notice = new Notice();
-                            notice.setMessage(doc.getString("message"));
-                            notice.setDate(doc.getDate("createdDate"));
-                            notices.add(notice);
-                        }
+                                   notices = new ArrayList<Notice>();
+                                   for (DocumentSnapshot doc : documentSnapshots) {
+                                       Notice notice = new Notice();
+                                       notice.setMessage(doc.getString("message"));
+                                       notice.setDate(doc.getDate("createdDate"));
+                                       notices.add(notice);
+                                   }
                         /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_list_item_1, notices));*/
-                        CustomAdapter adapter = new CustomAdapter(getActivity(), notices);
-                        list.setAdapter(adapter);
+                                   CustomAdapter adapter = new CustomAdapter(getActivity(), notices);
+                                   list.setAdapter(adapter);
+                               }
+                           });
+
+               } catch (Exception e) {
+                   System.out.println("### ERROR IN INBOX =>" + e);
+                   proDialog.dismiss();
+               }
+
+           } else {
+               // utility.createAlert(getContext(), "notification not found");
+           }
+       }
+       /* } else {
+            utility.createAlert(getContext(), "notification not found");
+        }*/
+    }
+
+    private void createAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setMessage("Profile Not found");
+        alertDialogBuilder.setPositiveButton("ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
                     }
                 });
 
 
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
-
 
 }

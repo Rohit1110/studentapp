@@ -45,6 +45,8 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
     String omrimageUrl;
     String parerImageUrl;
     private ImageView img;
+    private TextView txtexam;
+    private String name;
 
     public ExamAdapter(Activity context, ArrayList items) {
 
@@ -52,6 +54,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
         super(context, R.layout.exam_row_layout, items);
         this.context = context;
         this.items = items;
+
     }
 
 
@@ -60,7 +63,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.exam_row_layout, null, true);
 
-        TextView txtexam = (TextView) rowView.findViewById(R.id.examshow);
+         txtexam = (TextView) rowView.findViewById(R.id.examshow);
         Button btnomr = (Button) rowView.findViewById(R.id.omrshow);
         Button btnpapersol = (Button) rowView.findViewById(R.id.psolshow);
         image = (ImageView) rowView.findViewById(R.id.imageView);
@@ -68,10 +71,39 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
 
         Exam exam = getItem(position);
         txtexam.setText(exam.getTestName());
+        name=exam.getTestName();
         omrimageUrl=exam.getOMR();
         parerImageUrl=exam.getPSolution();
-        btnomr.setOnClickListener(this);
-        btnpapersol.setOnClickListener(this);
+        btnomr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inf=new Intent(getContext(),Activityfullscreen.class);
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("url", omrimageUrl);
+                bundle.putString("exam",  name);
+
+                //Add the bundle to the intent
+                inf.putExtras(bundle);
+
+                getContext().startActivity(inf);
+            }
+        });
+        btnpapersol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inf=new Intent(getContext(),Activityfullscreen.class);
+                Bundle bundle = new Bundle();
+
+//Add your data to bundle
+                bundle.putString("url", parerImageUrl);
+                bundle.putString("exam",  name);
+//Add the bundle to the intent
+                inf.putExtras(bundle);
+                getContext().startActivity(inf);
+            }
+        });
 
 
         return rowView;
@@ -101,10 +133,11 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
          Intent inf=new Intent(getContext(),Activityfullscreen.class);
             Bundle bundle = new Bundle();
 
-//Add your data to bundle
+            //Add your data to bundle
             bundle.putString("url", omrimageUrl);
+            bundle.putString("exam",  name);
 
-//Add the bundle to the intent
+            //Add the bundle to the intent
             inf.putExtras(bundle);
 
             getContext().startActivity(inf);
@@ -125,7 +158,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
 
 //Add your data to bundle
             bundle.putString("url", parerImageUrl);
-
+            bundle.putString("exam",  name);
 //Add the bundle to the intent
             inf.putExtras(bundle);
             getContext().startActivity(inf);

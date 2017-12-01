@@ -101,10 +101,9 @@ public class Student_Profile extends Fragment {
                 .whereEqualTo("StudentContact", phone)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        proDialog.dismiss();
+                      proDialog.dismiss();
                         if (task.isSuccessful()) {
 
                             if (task.getResult() == null || task.getResult().size() == 0) {

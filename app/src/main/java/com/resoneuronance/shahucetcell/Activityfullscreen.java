@@ -51,46 +51,41 @@ public class Activityfullscreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activityfullscreen);
-        img = (ImageView) findViewById(R.id.dimage);
+
         Bundle bundle = getIntent().getExtras();//Extract the data…
         if (bundle != null) {
 
             imgUrl = bundle.getString("url");
             //imageName = bundle.getString("exam");
             // new Bitmapviewer().execute();
+            img = (ImageView) findViewById(R.id.dimage);
+            Glide.with(Activityfullscreen.this)
+                    .load(imgUrl)
+
+                    .into(img);
 
         }
 
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+       /* FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
 
         StorageReference islandRef = storageRef.child("3.png");
-        File localFile = null;
 
-        try {
-            localFile = File.createTempFile("images", "jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        final File finalLocalFile = localFile;
-        islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        storageRef.child("3.png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
-                Uri uri = Uri.fromFile(finalLocalFile);
-                img.setImageURI(uri);
-
+            public void onSuccess(byte[] bitmapdata) {
+                // Use the bytes to display the image
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                img.setImageBitmap(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
             }
-        });
+        });*/
 
 
 
@@ -121,7 +116,7 @@ public class Activityfullscreen extends AppCompatActivity {
                     );*/
 
 
-        Toast.makeText(getApplicationContext(), imgUrl + "  " + imageName, Toast.LENGTH_LONG).show();
+
 
     }
 

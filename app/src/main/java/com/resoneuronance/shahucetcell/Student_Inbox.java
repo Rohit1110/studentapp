@@ -98,7 +98,7 @@ public class Student_Inbox extends Fragment {
 
                                @Override
                                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                   proDialog.dismiss();
+                                  proDialog.dismiss();
                                    if (e != null) {
                                        Log.w(TAG, "Listen failed.", e);
                                        return;

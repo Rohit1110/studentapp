@@ -52,18 +52,14 @@ public class Student_ExamResult extends Fragment {
         list = (ListView) rootView.findViewById(R.id.listexam);
         return rootView;
     }
-
-
-
-
     @Override
     public void onResume() {
         super.onResume();
         utility = new Utility();
 
-        proDialog = new ProgressDialog(getContext());
+    /*    proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
-        proDialog.setCancelable(false);
+        proDialog.setCancelable(false);*/
 
 
         SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -77,14 +73,14 @@ public class Student_ExamResult extends Fragment {
                 utility.createAlert(getContext(), "Exam result not found");
                 return;
             }
-            proDialog.show();
+           // proDialog.show();
             if (studentsRef == null || studentsRef.getId() != null) {
                 final ListenerRegistration docRef = studentsRef.collection("Exams")
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                             @Override
                             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                proDialog.dismiss();
+                               // proDialog.dismiss();
                                 if (e != null) {
                                     Log.w(TAG, "Listen failed.", e);
                                     return;

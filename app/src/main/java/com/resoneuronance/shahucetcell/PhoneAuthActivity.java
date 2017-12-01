@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +34,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import static android.view.View.VISIBLE;
+
 /**
  * Created by AJ
  * Created on 09-Jun-17.
@@ -41,6 +45,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     EditText mPhoneNumberField, mVerificationField;
+    TextView mCodeNumberField;
     Button mStartButton, mVerifyButton, mResendButton;
     ProgressDialog proDialog;
 
@@ -48,6 +53,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     String mVerificationId;
+    LinearLayout layoutvarification;
+    LinearLayout phoneAuth;
 
     private static final String TAG = "PhoneAuthActivity";
 
@@ -59,10 +66,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
         mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
         mVerificationField = (EditText) findViewById(R.id.field_verification_code);
+        mCodeNumberField=(TextView) findViewById(R.id.field_code_number);
+
 
         mStartButton = (Button) findViewById(R.id.button_start_verification);
         mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
         mResendButton = (Button) findViewById(R.id.button_resend);
+        layoutvarification=(LinearLayout)findViewById(R.id.layoutvarification);
+        phoneAuth=(LinearLayout)findViewById(R.id.layoutauth);
 
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
@@ -80,6 +91,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             public void onVerificationFailed(FirebaseException e) {
                 Log.w(TAG, "onVerificationFailed", e);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    phoneAuth.setVisibility(VISIBLE);
+                    layoutvarification.setVisibility(View.GONE);
+
                     mPhoneNumberField.setError("Invalid phone number.");
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
@@ -93,6 +107,15 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 mVerificationId = verificationId;
                 mResendToken = token;
+                phoneAuth.setVisibility(View.GONE);
+                layoutvarification.setVisibility(VISIBLE);
+
+                    /*Intent intent = new Intent(PhoneAuthActivity.this,CodeVariFication.class);
+                    Bundle bundle =new Bundle();
+                    bundle.putString("varificationid",verificationId);
+                   // bundle.putString("token",PhoneAuthProvider.ForceResendingToken);
+                    startActivity(intent);*/
+
             }
         };
     }
@@ -134,6 +157,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
+
+
     }
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
@@ -174,15 +199,17 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_start_verification:
-                proDialog = new ProgressDialog(this);
+               proDialog = new ProgressDialog(PhoneAuthActivity.this);
                 proDialog.setMessage("please wait....");
                 proDialog.setCancelable(false);
                 proDialog.show();
                 if (!validatePhoneNumber()) {
+                    proDialog.dismiss();
                     return;
                 }
+                startPhoneNumberVerification(mCodeNumberField.getText().toString()+mPhoneNumberField.getText().toString());
 
-                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+
                 break;
             case R.id.button_verify_phone:
                 String code = mVerificationField.getText().toString();

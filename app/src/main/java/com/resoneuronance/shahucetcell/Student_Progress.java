@@ -75,14 +75,14 @@ public class Student_Progress extends Fragment {
                 utility.createAlert(getContext(), "Exam result not found");
                 return;
             }
-            proDialog.show();
+           // proDialog.show();
             final ListenerRegistration docRef = progressRef.collection("Exams")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
 
                         @Override
                         public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                            proDialog.dismiss();
+                           // proDialog.dismiss();
                             if (e != null) {
                                 Log.w(TAG, "Listen failed.", e);
                                 return;

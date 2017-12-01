@@ -77,12 +77,13 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
         btnomr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Exam exam=getItem(position);
                 Intent inf=new Intent(getContext(),Activityfullscreen.class);
                 Bundle bundle = new Bundle();
 
                 //Add your data to bundle
-                bundle.putString("url", omrimageUrl);
-                bundle.putString("exam",  name);
+                bundle.putString("url",  exam.getOMR());
+
 
                 //Add the bundle to the intent
                 inf.putExtras(bundle);
@@ -93,12 +94,14 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
         btnpapersol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*Exam exam=(Exam)v.getTag();*/
+                Exam exam= getItem(position);
                 Intent inf=new Intent(getContext(),Activityfullscreen.class);
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
-                bundle.putString("url", parerImageUrl);
-                bundle.putString("exam",  name);
+                bundle.putString("url", exam.getPSolution());
+
 //Add the bundle to the intent
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
@@ -135,7 +138,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
 
             //Add your data to bundle
             bundle.putString("url", omrimageUrl);
-            bundle.putString("exam",  name);
+
 
             //Add the bundle to the intent
             inf.putExtras(bundle);
@@ -158,7 +161,7 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
 
 //Add your data to bundle
             bundle.putString("url", parerImageUrl);
-            bundle.putString("exam",  name);
+
 //Add the bundle to the intent
             inf.putExtras(bundle);
             getContext().startActivity(inf);

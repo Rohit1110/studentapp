@@ -24,16 +24,19 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                tab = new Student_Profile();
+                tab = new GeneralNotifications();
                 break;
             case 1:
+                tab = new Student_Profile();
+                break;
+            case 2:
                 tab = new Student_Inbox();
                 break;
 
-            case 2:
+            case 3:
                 tab = new Student_ExamResult();
                 break;
-            case 3:
+            case 4:
                 tab = new Student_Progress();
                 break;
 
@@ -42,6 +45,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 break;
         }
         return tab;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override

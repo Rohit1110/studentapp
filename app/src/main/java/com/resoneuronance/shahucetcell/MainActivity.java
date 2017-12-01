@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Notifications"));
         tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));
         tabLayout.addTab(tabLayout.newTab().setText("INBOX"));
         tabLayout.addTab(tabLayout.newTab().setText("EXAM RESULT"));

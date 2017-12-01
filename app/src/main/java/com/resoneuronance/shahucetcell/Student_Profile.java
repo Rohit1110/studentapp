@@ -71,9 +71,9 @@ public class Student_Profile extends Fragment {
 
         name = (EditText) rootView.findViewById(R.id.sname);
         roll = (EditText) rootView.findViewById(R.id.sroll);
-        scontact = (EditText) rootView.findViewById(R.id.scontact);
+       // scontact = (EditText) rootView.findViewById(R.id.scontact);
         category = (EditText) rootView.findViewById(R.id.scatagory);
-        pcontact = (EditText) rootView.findViewById(R.id.pcontact);
+       // pcontact = (EditText) rootView.findViewById(R.id.pcontact);
         sclass = (EditText) rootView.findViewById(R.id.scalss);
         ppercent = (EditText) rootView.findViewById(R.id.spercent);
         profilep=(ImageView)rootView.findViewById(R.id.profilephoto);
@@ -175,8 +175,8 @@ public class Student_Profile extends Fragment {
                         category.setText(sprofile.getCategory());
                         sclass.setText(sprofile.getStudclass() + " " + sprofile.getDiv());
                         ppercent.setText(sprofile.getPrePercent());
-                        pcontact.setText(sprofile.getParentContact());
-                        scontact.setText(sprofile.getStudentContact());
+                       // pcontact.setText(sprofile.getParentContact());
+                       // scontact.setText(sprofile.getStudentContact());
                         Glide.with(getActivity())
                                 .load(sprofile.getProfile())
                                 .override(300, 200)

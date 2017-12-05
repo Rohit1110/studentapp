@@ -66,7 +66,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // createListener();
+        createListener();
 
 
 
@@ -82,7 +82,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       createListener();
+      // createListener();
     }
 
     private void createListener() {
@@ -107,7 +107,7 @@ public class GeneralNotifications extends Fragment {
                 proDialog.show();
                 try {
 
-                    docRef = db.collection("GeneralNotices")
+                    docRef = db.collection("GeneralNotices").orderBy("createdDate")
                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                                 @Override

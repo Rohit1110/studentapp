@@ -93,7 +93,7 @@ public class Student_Inbox extends Fragment {
            if (docRef == null && roll != null && roll.trim().length() > 0) {
                try {
                    proDialog.show();
-                   docRef = db.collection("Students").document(roll).collection("Notices")
+                   docRef = db.collection("students").document(roll).collection("Notices")
                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                                @Override
@@ -106,6 +106,8 @@ public class Student_Inbox extends Fragment {
 
                                    notices = new ArrayList<Notice>();
                                    for (DocumentSnapshot doc : documentSnapshots) {
+                                       Log.d("Data", doc.getId() + " => " + doc.getData());
+                                       Log.d("Name", doc.getId() + " => " + doc.getData().get("message"));
                                        Notice notice = new Notice();
                                        notice.setMessage(doc.getString("message"));
                                        notice.setDate(doc.getDate("createdDate"));
@@ -132,20 +134,6 @@ public class Student_Inbox extends Fragment {
         }*/
     }
 
-    private void createAlert() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setMessage("Profile Not found");
-        alertDialogBuilder.setPositiveButton("ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                    }
-                });
-
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
+  
 
 }

@@ -67,7 +67,7 @@ public class Student_ExamResult extends Fragment {
 
 
         if (roll != null && roll.trim().length() > 0) {
-            DocumentReference studentsRef = db.collection("Students").document(roll);
+            DocumentReference studentsRef = db.collection("students").document(roll);
 
             if (studentsRef == null || studentsRef.getId() == null) {
                 utility.createAlert(getContext(), "Exam result not found");
@@ -91,10 +91,15 @@ public class Student_ExamResult extends Fragment {
                                 }
                                 exams = new ArrayList<Exam>();
                                 for (DocumentSnapshot doc : documentSnapshots) {
+                                    Log.d("Data", doc.getId() + " => " + doc.getData());
                                     Exam exam = new Exam();
                                     exam.setTestName(doc.getString("TestName"));
                                     exam.setOMR(doc.getString("OMR"));
-                                    exam.setPSolution(doc.getString("PSolution"));
+                                    //exam.setPSolution(doc.getString("PSolution"));
+                                    exam.setProgressReport(doc.getString("Progressreport"));
+                                    exam.setAnalysis(doc.getString("analysisFileUrl"));
+                                    //exam.setCorrectkey(doc.getString("correctedAnswerFileUrl"));
+                                    exam.setExamid(doc.getString("examID"));
                                     exams.add(exam);
 
                                 }

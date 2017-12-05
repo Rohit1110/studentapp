@@ -71,9 +71,9 @@ public class Student_Profile extends Fragment {
 
         name = (EditText) rootView.findViewById(R.id.sname);
         roll = (EditText) rootView.findViewById(R.id.sroll);
-       // scontact = (EditText) rootView.findViewById(R.id.scontact);
+       scontact = (EditText) rootView.findViewById(R.id.scontact);
         category = (EditText) rootView.findViewById(R.id.scatagory);
-       // pcontact = (EditText) rootView.findViewById(R.id.pcontact);
+       pcontact = (EditText) rootView.findViewById(R.id.pcontact);
         sclass = (EditText) rootView.findViewById(R.id.scalss);
         ppercent = (EditText) rootView.findViewById(R.id.spercent);
         profilep=(ImageView)rootView.findViewById(R.id.profilephoto);
@@ -97,7 +97,7 @@ public class Student_Profile extends Fragment {
         Log.v("SSSS", phone);
 
 
-        db.collection("Students")
+        db.collection("students")
                 .whereEqualTo("StudentContact", phone)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -134,14 +134,14 @@ public class Student_Profile extends Fragment {
                                 if (document.getData().get("Div") != null) {
                                     div = document.getData().get("Div").toString();
                                 }
-                                if (document.getData().get("ParentContact") != null) {
-                                    parentcontact = document.getData().get("ParentContact").toString();
+                                if (document.getData().get("PrePercent") != null) {
+                                    PrePercent = document.getData().get("PrePercent").toString();
                                 }
                                 if (document.getData().get("StudentContact") != null) {
                                     studentcontact = document.getData().get("StudentContact").toString();
                                 }
-                                if (document.getData().get("PrePercent") != null) {
-                                    PrePercent = document.getData().get("PrePercent").toString();
+                                if (document.getData().get("ParentContact") != null) {
+                                    parentcontact = document.getData().get("ParentContact").toString();
                                 }
                                 if (document.getData().get("Image") != null) {
                                     profilephoto = document.getData().get("Image").toString();
@@ -175,8 +175,8 @@ public class Student_Profile extends Fragment {
                         category.setText(sprofile.getCategory());
                         sclass.setText(sprofile.getStudclass() + " " + sprofile.getDiv());
                         ppercent.setText(sprofile.getPrePercent());
-                       // pcontact.setText(sprofile.getParentContact());
-                       // scontact.setText(sprofile.getStudentContact());
+                       pcontact.setText(sprofile.getParentContact());
+                        scontact.setText(sprofile.getStudentContact());
                         Glide.with(getActivity())
                                 .load(sprofile.getProfile())
                                 .override(300, 200)

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activityfullscreen" />
-        <activity android:name=".CodeVariFication"></activity>
+        <activity android:name=".CodeVariFication" />
+        <activity android:name=".ShowPDF" />
+        <activity android:name=".ProgressViewActivity" />
+        <activity android:name=".AnalysisShow" />
+        <activity android:name=".PDfViewer" />
+        <activity android:name=".Profile_StudentActivity" />
+        <activity android:name=".CorrectkeyShow"></activity>
     </application>
 
 </manifest>

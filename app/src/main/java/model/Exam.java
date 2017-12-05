@@ -11,6 +11,33 @@ public class Exam {
     private  String OMR;
     private  String PSolution;
     private String progressReport;
+    private String analysis;
+    private String correctkey;
+    private String examid;
+
+    public String getExamid() {
+        return examid;
+    }
+
+    public void setExamid(String examid) {
+        this.examid = examid;
+    }
+
+    public String getCorrectkey() {
+        return correctkey;
+    }
+
+    public void setCorrectkey(String correctkey) {
+        this.correctkey = correctkey;
+    }
+
+    public String getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis(String analysis) {
+        this.analysis = analysis;
+    }
 
     public String getTestName() {
         return testName;

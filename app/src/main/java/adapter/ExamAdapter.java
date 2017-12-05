@@ -3,6 +3,7 @@ package adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +28,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.StorageReference;
 import com.resoneuronance.shahucetcell.Activityfullscreen;
+import com.resoneuronance.shahucetcell.AnalysisShow;
+import com.resoneuronance.shahucetcell.CorrectkeyShow;
+import com.resoneuronance.shahucetcell.PDfViewer;
+import com.resoneuronance.shahucetcell.ProgressViewActivity;
 import com.resoneuronance.shahucetcell.R;
+import com.resoneuronance.shahucetcell.ShowPDF;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import loder.LoadImageTask;
@@ -37,7 +52,7 @@ import model.Notice;
  * Created by Rohit on 11/24/2017.
  */
 
-public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListener {
+public class ExamAdapter extends ArrayAdapter<Exam>  {
 
     private final Activity context;
     private final ArrayList<Exam> items;
@@ -47,7 +62,9 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
     private ImageView img;
     private TextView txtexam;
     private String name;
-
+    String dest_file_path = "test.pdf";
+    int downloadedSize = 0, totalsize;
+    float per = 0;
     public ExamAdapter(Activity context, ArrayList items) {
 
 
@@ -66,7 +83,9 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
          txtexam = (TextView) rowView.findViewById(R.id.examshow);
         Button btnomr = (Button) rowView.findViewById(R.id.omrshow);
         Button btnpapersol = (Button) rowView.findViewById(R.id.psolshow);
-        image = (ImageView) rowView.findViewById(R.id.imageView);
+        Button btnanalysis=(Button)rowView.findViewById(R.id.btnanalysis);
+        Button btncorrectkey=(Button) rowView.findViewById(R.id.btncorrectkey);
+       // image = (ImageView) rowView.findViewById(R.id.imageView);
 
 
         Exam exam = getItem(position);
@@ -95,16 +114,71 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 /*Exam exam=(Exam)v.getTag();*/
+
+                /*new Thread(new Runnable() {
+                    Exam exam= getItem(position);
+                    public void run() {
+                        Uri path = Uri.fromFile(downloadFile(exam.getPSolution()));
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(path, "application/pdf");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            getContext().startActivity(intent);
+
+                        } catch (ActivityNotFoundException e) {
+
+                                    Log.v(e+"","PDF Reader application is not installed in your device");
+                        }
+                    }
+                }).start();*/
+
+                /*Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(exam.getPSolution()));
+                getContext().startActivity(browserIntent);*/
+                Exam exam=getItem(position);
+                Intent inf=new Intent(getContext(),PDfViewer.class);
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("examid",  exam.getExamid());
+
+
+                //Add the bundle to the intent
+                inf.putExtras(bundle);
+
+                getContext().startActivity(inf);
+            }
+        });
+        btnanalysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Exam exam= getItem(position);
-                Intent inf=new Intent(getContext(),Activityfullscreen.class);
+
+                Intent inf=new Intent(getContext(),AnalysisShow.class);
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
-                bundle.putString("url", exam.getPSolution());
-
-//Add the bundle to the intent
+                bundle.putString("examid",  exam.getExamid());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
+
+
+
+            }
+        });
+        btncorrectkey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Exam exam= getItem(position);
+
+                Intent inf=new Intent(getContext(),CorrectkeyShow.class);
+                Bundle bundle = new Bundle();
+
+//Add your data to bundle
+                bundle.putString("examid",  exam.getExamid());
+                inf.putExtras(bundle);
+                getContext().startActivity(inf);
+
+
             }
         });
 
@@ -112,61 +186,63 @@ public class ExamAdapter extends ArrayAdapter<Exam> implements View.OnClickListe
         return rowView;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.omrshow) {
-          /*  Dialog viewimage = new Dialog(getContext());
-            viewimage.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            viewimage.setContentView(R.layout.image_view);
-            ImageView wv = (ImageView) viewimage.findViewById(R.id.omrimg);
-           *//* wv.getSettings().setBuiltInZoomControls(true);
-            String im = "<html><body><div style=height:30%; width:30%;> <center><img src=\"" + omrimageUrl + "\"alt=\"Smiley face\" height=600 width=400 /></center></div></body></html>";
-            wv.loadDataWithBaseURL("fake", im, "text/html", "UTF-8", "");*//*
-            Glide.with(getContext())
-                    .load(omrimageUrl)
-
-                    .into(wv);
-            viewimage.show();*/
-
-            // custom dialog
+    //PDF Downloader
 
 
+    File downloadFile(String dwnload_file_path) {
+        File file = null;
+        try {
+
+            URL url = new URL(dwnload_file_path);
+            HttpURLConnection urlConnection = (HttpURLConnection) url
+                    .openConnection();
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoOutput(true);
+
+            // connect
+            urlConnection.connect();
+
+            // set the path where we want to save the file
+            //File SDCardRoot = Environment.getDataDirectory();
+            // create a new file, to save the downloaded file
+            file = new File(Environment.getDataDirectory()
+                    + "/ShahuApp/",dest_file_path);
+            //file = new File(SDCardRoot, dest_file_path);
+
+            FileOutputStream fileOutput = new FileOutputStream(file);
+
+            // Stream used for reading the data from the internet
+            InputStream inputStream = urlConnection.getInputStream();
+
+            // this is the total size of the file which we are
+            // downloading
+            totalsize = urlConnection.getContentLength();
 
 
-         Intent inf=new Intent(getContext(),Activityfullscreen.class);
-            Bundle bundle = new Bundle();
+            // create a buffer...
+            byte[] buffer = new byte[1024 * 1024];
+            int bufferLength = 0;
 
-            //Add your data to bundle
-            bundle.putString("url", omrimageUrl);
+            while ((bufferLength = inputStream.read(buffer)) > 0) {
+                fileOutput.write(buffer, 0, bufferLength);
+                downloadedSize += bufferLength;
+                per = ((float) downloadedSize / totalsize) * 100;
+
+            }
+            // close the output stream when complete //
+            fileOutput.close();
+            //setText("Download Complete. Open PDF Application installed in the device.");
+
+        } catch (final MalformedURLException e) {
+
+        } catch (final IOException e) {
 
 
-            //Add the bundle to the intent
-            inf.putExtras(bundle);
-
-            getContext().startActivity(inf);
-
-           /* alertadd.setNeutralButton("Here!", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dlg, int sumthin) {
-
-                }
-            });*/
-
-
-
+        } catch (final Exception e) {
 
         }
-        if (v.getId() == R.id.psolshow) {
-            Intent inf=new Intent(getContext(),Activityfullscreen.class);
-            Bundle bundle = new Bundle();
-
-//Add your data to bundle
-            bundle.putString("url", parerImageUrl);
-
-//Add the bundle to the intent
-            inf.putExtras(bundle);
-            getContext().startActivity(inf);
-
-        }
+        return file;
     }
 
 

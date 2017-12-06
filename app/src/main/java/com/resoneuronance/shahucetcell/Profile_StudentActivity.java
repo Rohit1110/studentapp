@@ -55,7 +55,7 @@ public class Profile_StudentActivity extends AppCompatActivity {
             Log.v("SSSS", phone);
 
 
-            db.collection("Students")
+            db.collection("students")
                     .whereEqualTo("StudentContact", phone)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

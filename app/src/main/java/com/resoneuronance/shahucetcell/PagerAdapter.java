@@ -26,22 +26,22 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 tab = new GeneralNotifications();
                 break;
-            case 1:
+            /*case 2:
                 tab = new Student_Profile();
-                break;
-            case 2:
+                break;*/
+            case 1:
                 tab = new Student_Inbox();
                 break;
 
-            case 3:
+            case 2:
                 tab = new Student_ExamResult();
                 break;
-            case 4:
+            case 3:
                 tab = new Student_Progress();
                 break;
 
             default:
-                tab = new Student_Profile();
+                tab = new GeneralNotifications();
                 break;
         }
         return tab;

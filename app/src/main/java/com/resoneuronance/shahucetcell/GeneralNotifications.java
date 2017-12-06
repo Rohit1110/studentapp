@@ -23,6 +23,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
@@ -82,7 +83,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-      // createListener();
+      createListener();
     }
 
     private void createListener() {
@@ -104,15 +105,15 @@ public class GeneralNotifications extends Fragment {
         if (roll != null && roll.trim().length() > 0) {
 
             if (docRef == null && roll != null && roll.trim().length() > 0) {
-                proDialog.show();
+               // proDialog.show();
                 try {
 
-                    docRef = db.collection("GeneralNotices").orderBy("createdDate")
+                    docRef = db.collection("GeneralNotices").orderBy("createdDate", Query.Direction.DESCENDING)
                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                                 @Override
                                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                    proDialog.dismiss();
+                                    //proDialog.dismiss();
                                     if (e != null) {
                                         Log.w(TAG, "Listen failed.", e);
                                         return;
@@ -132,18 +133,19 @@ public class GeneralNotifications extends Fragment {
                                 android.R.layout.simple_list_item_1, notices));*/
                                     GeneralNoticeAdapter adapter = new GeneralNoticeAdapter(getActivity(), notices);
                                     list.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
 
                                 }
                             });
 
                 } catch (Exception e) {
                     System.out.println("### ERROR IN INBOX =>" + e);
-                    proDialog.dismiss();
+                    //proDialog.dismiss();
                 }
 
             } else {
                 // utility.createAlert(getContext(), "notification not found");
-                proDialog.dismiss();
+                //proDialog.dismiss();
             }
 
         } else {

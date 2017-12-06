@@ -23,6 +23,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
@@ -64,15 +65,24 @@ public class Student_Inbox extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         //createListener(roll);
 
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            createListener(roll);
+
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        createListener(roll);
+        //createListener(roll);
     }
 
     private void createListener(String roll) {
@@ -92,15 +102,19 @@ public class Student_Inbox extends Fragment {
         if (roll != null && roll.trim().length() > 0) {
            if (docRef == null && roll != null && roll.trim().length() > 0) {
                try {
-                   proDialog.show();
-                   docRef = db.collection("students").document(roll).collection("Notices")
+                   //proDialog.show();
+                   docRef = db.collection("students").document(roll).collection("Notices").orderBy("createdDate", Query.Direction.DESCENDING)
                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                                @Override
                                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                  proDialog.dismiss();
+                                  //proDialog.dismiss();
                                    if (e != null) {
                                        Log.w(TAG, "Listen failed.", e);
+                                       return;
+                                   }
+                                   if (documentSnapshots == null || documentSnapshots.size() == 0) {
+                                       utility.createAlert(getActivity(), "Inbox not found");
                                        return;
                                    }
 
@@ -117,21 +131,22 @@ public class Student_Inbox extends Fragment {
                                 android.R.layout.simple_list_item_1, notices));*/
                                    CustomAdapter adapter = new CustomAdapter(getActivity(), notices);
                                    list.setAdapter(adapter);
+                                   adapter.notifyDataSetChanged();
                                }
                            });
 
                } catch (Exception e) {
                    System.out.println("### ERROR IN INBOX =>" + e);
-                   proDialog.dismiss();
+                  // proDialog.dismiss();
                }
 
            } else {
-               // utility.createAlert(getContext(), "notification not found");
+               utility.createAlert(getContext(), "Inbox data not found");
            }
-       }
-       /* } else {
-            utility.createAlert(getContext(), "notification not found");
-        }*/
+
+        } else {
+            utility.createAlert(getContext(), "Inbox data not found");
+        }
     }
 
   

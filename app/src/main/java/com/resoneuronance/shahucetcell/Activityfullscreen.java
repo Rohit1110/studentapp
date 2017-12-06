@@ -51,14 +51,15 @@ public class Activityfullscreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activityfullscreen);
-
+        img = (ImageView) findViewById(R.id.dimage);
         Bundle bundle = getIntent().getExtras();//Extract the data…
         if (bundle != null) {
 
             imgUrl = bundle.getString("url");
+            System.out.println("URL==>>>  "+imgUrl);
             //imageName = bundle.getString("exam");
             // new Bitmapviewer().execute();
-            img = (ImageView) findViewById(R.id.dimage);
+
             Glide.with(Activityfullscreen.this)
                     .load(imgUrl)
 

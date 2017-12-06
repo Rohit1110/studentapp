@@ -157,7 +157,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
-                bundle.putString("examid",  exam.getExamid());
+                bundle.putString("url",  exam.getAnalysis());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
 

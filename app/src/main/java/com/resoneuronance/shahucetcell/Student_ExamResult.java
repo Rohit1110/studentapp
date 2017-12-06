@@ -20,6 +20,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.resoneuronance.shahucetcell.R;
 
@@ -52,68 +53,77 @@ public class Student_ExamResult extends Fragment {
         list = (ListView) rootView.findViewById(R.id.listexam);
         return rootView;
     }
+
     @Override
-    public void onResume() {
-        super.onResume();
-        utility = new Utility();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            utility = new Utility();
 
     /*    proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);*/
 
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        String roll = preferences.getString("rollno", "");
+            SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+            String roll = preferences.getString("rollno", "");
 
 
-        if (roll != null && roll.trim().length() > 0) {
-            DocumentReference studentsRef = db.collection("students").document(roll);
+            if (roll != null && roll.trim().length() > 0) {
+                DocumentReference studentsRef = db.collection("students").document(roll);
 
-            if (studentsRef == null || studentsRef.getId() == null) {
-                utility.createAlert(getContext(), "Exam result not found");
-                return;
-            }
-           // proDialog.show();
-            if (studentsRef == null || studentsRef.getId() != null) {
-                final ListenerRegistration docRef = studentsRef.collection("Exams")
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                if (studentsRef == null || studentsRef.getId() == null) {
+                    utility.createAlert(getContext(), "Exam  not found");
+                    return;
+                }
+                // proDialog.show();
+                if (studentsRef == null || studentsRef.getId() != null) {
+                    final ListenerRegistration docRef = studentsRef.collection("Exams").orderBy("dateAdded", Query.Direction.DESCENDING)
+                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
-                            @Override
-                            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                               // proDialog.dismiss();
-                                if (e != null) {
-                                    Log.w(TAG, "Listen failed.", e);
-                                    return;
-                                }
-                                if (documentSnapshots == null || documentSnapshots.size() == 0) {
-                                    utility.createAlert(getActivity(), "Exam result not found");
-                                    return;
-                                }
-                                exams = new ArrayList<Exam>();
-                                for (DocumentSnapshot doc : documentSnapshots) {
-                                    Log.d("Data", doc.getId() + " => " + doc.getData());
-                                    Exam exam = new Exam();
-                                    exam.setTestName(doc.getString("TestName"));
-                                    exam.setOMR(doc.getString("OMR"));
-                                    //exam.setPSolution(doc.getString("PSolution"));
-                                    exam.setProgressReport(doc.getString("Progressreport"));
-                                    exam.setAnalysis(doc.getString("analysisFileUrl"));
-                                    //exam.setCorrectkey(doc.getString("correctedAnswerFileUrl"));
-                                    exam.setExamid(doc.getString("examID"));
-                                    exams.add(exam);
+                                @Override
+                                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                                    // proDialog.dismiss();
+                                    if (e != null) {
+                                        Log.w(TAG, "Listen failed.", e);
+                                        return;
+                                    }
+                                    if (documentSnapshots == null || documentSnapshots.size() == 0) {
+                                        utility.createAlert(getActivity(), "Exam result not found");
+                                        return;
+                                    }
+                                    exams = new ArrayList<Exam>();
+                                    for (DocumentSnapshot doc : documentSnapshots) {
+                                        Log.d("Data", doc.getId() + " => " + doc.getData());
+                                        Exam exam = new Exam();
+                                        exam.setTestName(doc.getString("TestName"));
+                                        exam.setOMR(doc.getString("OMR"));
+                                        //exam.setPSolution(doc.getString("PSolution"));
+                                        exam.setProgressReport(doc.getString("Progressreport"));
+                                        exam.setAnalysis(doc.getString("Analysis"));
+                                        //exam.setCorrectkey(doc.getString("correctedAnswerFileUrl"));
+                                        exam.setExamid(doc.getString("examID"));
+                                        exams.add(exam);
 
-                                }
+                                    }
                         /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_list_item_1, notices));*/
-                                ExamAdapter adapter = new ExamAdapter(getActivity(), exams);
-                                list.setAdapter(adapter);
-                            }
-                        });
+                                    ExamAdapter adapter = new ExamAdapter(getActivity(), exams);
+                                    list.setAdapter(adapter);
+                                }
+                            });
+                }
+
+
+            }else{
+                utility.createAlert(getContext(),"Exam not found");
             }
-
-
-        }else{
-            utility.createAlert(getContext(),"Result not found");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

@@ -16,7 +16,8 @@ public class AnalysisShow extends AppCompatActivity {
         webView=(WebView)findViewById(R.id.analysiswebview);
         Bundle bundle = getIntent().getExtras();//Extract the data…
         if (bundle != null) {
-            url = bundle.getString("examid");
+            url = bundle.getString("url");
+            System.out.println("URL==>>> "+ url);
             webView.loadUrl(url);
 
         }

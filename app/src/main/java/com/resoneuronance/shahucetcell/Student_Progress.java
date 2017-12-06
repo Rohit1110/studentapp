@@ -57,10 +57,77 @@ public class Student_Progress extends Fragment {
         return rootView;
     }
 
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            utility = new Utility();
+            proDialog = new ProgressDialog(getContext());
+            proDialog.setMessage("please wait....");
+            proDialog.setCancelable(false);
+
+
+            SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+            String roll = preferences.getString("rollno", "");
+            System.out.println("################ ROLL NO IN PROGRESS :" + roll);
+            if (roll != null && roll.trim().length() > 0) {
+                DocumentReference progressRef = db.collection("students").document(roll);
+                if (progressRef == null || progressRef.getId() == null) {
+                    utility.createAlert(getContext(), "Progress result not found");
+                    return;
+                }
+                // proDialog.show();
+                final ListenerRegistration docRef = progressRef.collection("ProgressReport")
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+
+                            @Override
+                            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                                // proDialog.dismiss();
+                                if (e != null) {
+                                    Log.w(TAG, "Listen failed.", e);
+                                    return;
+                                }
+                                if (documentSnapshots == null || documentSnapshots.size() == 0) {
+                                    utility.createAlert(getActivity(), "Progress not found");
+                                    return;
+                                }
+
+                                // exams = new ArrayList<Exam>();
+                                for (DocumentSnapshot doc : documentSnapshots) {
+                            /*Exam exam = new Exam();
+                          exam.setProgressReport(doc.getString("Progressreport"));
+                            exams.add(exam);
+*/
+                                    imageUrl = doc.getString("Progressreport");
+
+
+                               /* Glide.with(getContext())
+                                        .load(imageUrl)
+
+                                        .into(imageView);*/
+                                    web.getSettings().setBuiltInZoomControls(true);
+                                    web.loadUrl(imageUrl);
+                                }
+                        /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_list_item_1, notices));*/
+//                        ProgressAdapter adapter = new ProgressAdapter(getActivity(), exams);
+//                        list.setAdapter(adapter);
+
+                            }
+                        });
+            } else {
+                utility.createAlert(getContext(), "progress not found");
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        utility = new Utility();
+        /*utility = new Utility();
         proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);
@@ -70,42 +137,46 @@ public class Student_Progress extends Fragment {
         String roll = preferences.getString("rollno", "");
         System.out.println("################ ROLL NO IN PROGRESS :" + roll);
         if (roll != null && roll.trim().length() > 0) {
-            DocumentReference progressRef = db.collection("Students").document(roll);
+            DocumentReference progressRef = db.collection("students").document(roll);
             if (progressRef == null || progressRef.getId() == null) {
-                utility.createAlert(getContext(), "Exam result not found");
+                utility.createAlert(getContext(), "Progress result not found");
                 return;
             }
-           // proDialog.show();
-            final ListenerRegistration docRef = progressRef.collection("Exams")
+            // proDialog.show();
+            final ListenerRegistration docRef = progressRef.collection("ProgressReport")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
 
                         @Override
                         public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                           // proDialog.dismiss();
+                            // proDialog.dismiss();
                             if (e != null) {
                                 Log.w(TAG, "Listen failed.", e);
                                 return;
                             }
+                            if (documentSnapshots == null || documentSnapshots.size() == 0) {
+                                utility.createAlert(getActivity(), "Progress not found");
+                                return;
+                            }
 
-                            exams = new ArrayList<Exam>();
+                            // exams = new ArrayList<Exam>();
                             for (DocumentSnapshot doc : documentSnapshots) {
-                            /*Exam exam = new Exam();
+                            *//*Exam exam = new Exam();
                           exam.setProgressReport(doc.getString("Progressreport"));
                             exams.add(exam);
-*/
+*//*
                                 imageUrl = doc.getString("Progressreport");
 
 
-                               /* Glide.with(getContext())
+                               *//* Glide.with(getContext())
                                         .load(imageUrl)
 
-                                        .into(imageView);*/
-                               web.getSettings().setBuiltInZoomControls(true);
-                               web.loadUrl(imageUrl);
+                                        .into(imageView);*//*
+                                web.getSettings().setBuiltInZoomControls(true);
+                                web.loadUrl(imageUrl);
                             }
-                        /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_list_item_1, notices));*/
+                        *//*list.setAdapter(new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_list_item_1, notices));*//*
 //                        ProgressAdapter adapter = new ProgressAdapter(getActivity(), exams);
 //                        list.setAdapter(adapter);
 
@@ -113,8 +184,9 @@ public class Student_Progress extends Fragment {
                     });
         } else {
             utility.createAlert(getContext(), "progress not found");
-        }
+        }*/
+    }
 
 
     }
-}
+

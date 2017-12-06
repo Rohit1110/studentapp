@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Sprofile;
 import utils.Utility;
@@ -90,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
                         setSupportActionBar(toolbar);
 
                         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-                        tabLayout.addTab(tabLayout.newTab().setText("Notifications"));
-                        tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));
-                        tabLayout.addTab(tabLayout.newTab().setText("INBOX"));
-                        tabLayout.addTab(tabLayout.newTab().setText("EXAM RESULT"));
-                        tabLayout.addTab(tabLayout.newTab().setText("PROGRESS"));
+                        tabLayout.addTab(tabLayout.newTab().setText("College Notices"));
+                        /*tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));*/
+                        tabLayout.addTab(tabLayout.newTab().setText("Inbox"));
+                        tabLayout.addTab(tabLayout.newTab().setText("Exam Section"));
+                        tabLayout.addTab(tabLayout.newTab().setText("Progress Report"));
                         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
@@ -129,6 +135,53 @@ public class MainActivity extends AppCompatActivity {
 
 
                 });
+
+
+                       /* ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+                        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+                        // Add Fragments to adapter one by one
+                        adapter.addFragment(new GeneralNotifications(), "Notifications");
+                        adapter.addFragment(new Student_Inbox(), "Inbox");
+                        adapter.addFragment(new Student_ExamResult(), "Results");
+                        adapter.addFragment(new Student_Progress(), "Progress Report");
+                        viewPager.setAdapter(adapter);
+
+                        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+                        tabLayout.setupWithViewPager(viewPager);
+                    }
+                });*/
+    }
+
+
+    // Adapter for the viewpager using FragmentPagerAdapter
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
 

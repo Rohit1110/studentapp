@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,8 +19,9 @@ import java.io.IOException;
  */
 
 public class Utility {
+    public  FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void createAlert(Context context,String message) {
+      public void createAlert(Context context, String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setMessage(message);
         alertDialogBuilder.setPositiveButton("ok",

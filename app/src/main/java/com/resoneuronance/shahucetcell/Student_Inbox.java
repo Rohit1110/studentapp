@@ -65,7 +65,7 @@ public class Student_Inbox extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //createListener(roll);
+        createListener(roll);
 
 
     }
@@ -74,7 +74,7 @@ public class Student_Inbox extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            createListener(roll);
+            //createListener(roll);
 
         }
     }
@@ -114,7 +114,7 @@ public class Student_Inbox extends Fragment {
                                        return;
                                    }
                                    if (documentSnapshots == null || documentSnapshots.size() == 0) {
-                                       utility.createAlert(getActivity(), "Inbox not found");
+                                       //utility.createAlert(getActivity(), "Inbox not found");
                                        return;
                                    }
 
@@ -141,11 +141,11 @@ public class Student_Inbox extends Fragment {
                }
 
            } else {
-               utility.createAlert(getContext(), "Inbox data not found");
+               //utility.createAlert(getContext(), "Inbox data not found");
            }
 
         } else {
-            utility.createAlert(getContext(), "Inbox data not found");
+            //utility.createAlert(getContext(), "Inbox data not found");
         }
     }
 

@@ -38,7 +38,7 @@ public class PDfViewer extends AppCompatActivity {
     StorageReference httpsReference;
     private ListenerRegistration docRef;
     ProgressDialog proDialog;
-    String examId,Url;
+    String examId, Url;
 
 
     @Override
@@ -49,7 +49,7 @@ public class PDfViewer extends AppCompatActivity {
         if (bundle != null) {
 
             examId = bundle.getString("examid");
-            System.out.println("Exam Id"+ examId);
+            System.out.println("Exam Id" + examId);
 
             docRef = db.collection("exams").document(examId)
 
@@ -62,13 +62,14 @@ public class PDfViewer extends AppCompatActivity {
                                 return;
                             }
 
-                             System.out.println("Data For PDF +>>"+documentSnapshot.getData());
+                            System.out.println("Data For PDF +>>" + documentSnapshot.getData());
                             Url = documentSnapshot.getString("paperSolutionExamFileUrl");
+                            System.out.println("Url ==>> " + Url);
 
 
                             httpsReference = storage.getReferenceFromUrl(Url);
 
-                            httpsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            /*httpsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     // Got the download URL for 'users/me/profile.png'
@@ -77,6 +78,52 @@ public class PDfViewer extends AppCompatActivity {
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                     finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });*/
+
+                            File localFile = null;
+                            try {
+                                File dir = new File(Environment.getDataDirectory() + "/ShahuApp");
+                                if (!dir.exists()) {
+                                    dir.mkdirs();
+
+                                }
+
+                                localFile = File.createTempFile("Exams", "pdf", dir);
+                                System.out.println("File U:" + localFile);
+
+
+                            } catch (IOException ioe) {
+                                System.out.println("Exception in creating file =>" + ioe);
+                                ioe.printStackTrace();
+                            }
+                            final File pdffile = localFile;
+                            System.out.println("File URI ==>" + Uri.fromFile(pdffile));
+
+                            httpsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    // Local temp file has been created
+                                    try {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(pdffile), "application/pdf");
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+
+                                    } catch (ActivityNotFoundException e) {
+
+                                        Log.v(e + "", "PDF Reader application is not installed in your device");
+                                    } catch (Exception e) {
+                                        System.out.println("Exception in file access =>");
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -107,48 +154,7 @@ public class PDfViewer extends AppCompatActivity {
 
 
 
-            /*File localFile = null;
-            try {
-                File dir = new File(Environment.getDataDirectory()+ "/ShahuApp/");
-                if(dir.exists()) {
-                    dir.mkdirs();
-                }
-                localFile = new File(dir + "Exams.pdf");
-                localFile.createNewFile();
-                //localFile = File.createTempFile("Exams", ".pdf", dir);
-                System.out.println("File:" + localFile);
-            } catch (IOException e) {
-                System.out.println("Exception in creating file =>" + e);
-                e.printStackTrace();
-            }
-            final File pdffile= localFile;
-            System.out.println("File URI ==>" + Uri.fromFile(pdffile));
-            httpsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    // Local temp file has been created
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(Uri.fromFile(pdffile), "application/pdf");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-
-                    } catch (ActivityNotFoundException e) {
-
-                        Log.v(e+"","PDF Reader application is not installed in your device");
-                    } catch (Exception e) {
-                        System.out.println("Exception in file access =>");
-                        e.printStackTrace();
-                    }
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });*/
+            /**/
 
 
         }

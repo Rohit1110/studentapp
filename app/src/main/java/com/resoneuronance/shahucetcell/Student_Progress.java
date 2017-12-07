@@ -63,7 +63,7 @@ public class Student_Progress extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            utility = new Utility();
+            /*utility = new Utility();
             proDialog = new ProgressDialog(getContext());
             proDialog.setMessage("please wait....");
             proDialog.setCancelable(false);
@@ -97,22 +97,22 @@ public class Student_Progress extends Fragment {
 
                                 // exams = new ArrayList<Exam>();
                                 for (DocumentSnapshot doc : documentSnapshots) {
-                            /*Exam exam = new Exam();
+                            *//*Exam exam = new Exam();
                           exam.setProgressReport(doc.getString("Progressreport"));
                             exams.add(exam);
-*/
+*//*
                                     imageUrl = doc.getString("Progressreport");
 
 
-                               /* Glide.with(getContext())
+                               *//* Glide.with(getContext())
                                         .load(imageUrl)
 
-                                        .into(imageView);*/
+                                        .into(imageView);*//*
                                     web.getSettings().setBuiltInZoomControls(true);
                                     web.loadUrl(imageUrl);
                                 }
-                        /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_list_item_1, notices));*/
+                        *//*list.setAdapter(new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_list_item_1, notices));*//*
 //                        ProgressAdapter adapter = new ProgressAdapter(getActivity(), exams);
 //                        list.setAdapter(adapter);
 
@@ -120,14 +120,14 @@ public class Student_Progress extends Fragment {
                         });
             } else {
                 utility.createAlert(getContext(), "progress not found");
-            }
+            }*/
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        /*utility = new Utility();
+        utility = new Utility();
         proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);
@@ -155,36 +155,37 @@ public class Student_Progress extends Fragment {
                                 return;
                             }
                             if (documentSnapshots == null || documentSnapshots.size() == 0) {
-                                utility.createAlert(getActivity(), "Progress not found");
+                                //utility.createAlert(getActivity(), "Progress not found");
                                 return;
                             }
 
+
+
                             // exams = new ArrayList<Exam>();
                             for (DocumentSnapshot doc : documentSnapshots) {
-                            *//*Exam exam = new Exam();
+                           /* Exam exam = new Exam();
                           exam.setProgressReport(doc.getString("Progressreport"));
-                            exams.add(exam);
-*//*
+                            exams.add(exam);*/
+
                                 imageUrl = doc.getString("Progressreport");
 
 
-                               *//* Glide.with(getContext())
+                                /*Glide.with(getContext())
                                         .load(imageUrl)
 
-                                        .into(imageView);*//*
+                                        .into(imageView);*/
                                 web.getSettings().setBuiltInZoomControls(true);
                                 web.loadUrl(imageUrl);
                             }
-                        *//*list.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_list_item_1, notices));*//*
+
 //                        ProgressAdapter adapter = new ProgressAdapter(getActivity(), exams);
 //                        list.setAdapter(adapter);
 
                         }
                     });
         } else {
-            utility.createAlert(getContext(), "progress not found");
-        }*/
+            //utility.createAlert(getContext(), "progress not found");
+        }
     }
 
 

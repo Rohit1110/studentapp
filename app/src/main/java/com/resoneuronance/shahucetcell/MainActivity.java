@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        utility = new Utility();
+        //utility = new Utility();
         proDialog = new ProgressDialog(MainActivity.this);
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);
@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("user", 0);
         phone = sp.getString("userphone", "");
         Log.v("SSSS", phone);
+
+
+
+
+
+
+
 
 
         db.collection("students")
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             if (task.getResult() == null || task.getResult().size() == 0) {
-                                utility.createAlert(getApplicationContext(), "data not found");
+                               // utility.createAlert(getApplicationContext(), "data not found");
                                 return;
                             }
 
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 String rollno = document.getData().get("RollNo").toString();
                                 if (rollno == null || rollno.trim().length() == 0) {
-                                    utility.createAlert(getApplicationContext(), "data not found");
+                                    //utility.createAlert(getApplicationContext(), "data not found");
                                     return;
                                 }
 
@@ -92,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
                         }
 
 
-                        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                         setSupportActionBar(toolbar);
 
                         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
                         tabLayout.addTab(tabLayout.newTab().setText("College Notices"));
-                        /*tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));*/
+                       /*tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));*/
                         tabLayout.addTab(tabLayout.newTab().setText("Inbox"));
                         tabLayout.addTab(tabLayout.newTab().setText("Exam Section"));
                         tabLayout.addTab(tabLayout.newTab().setText("Progress Report"));

@@ -19,7 +19,7 @@
                 android:id="@+id/profilephoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="25dp"
                 android:src="@mipmap/ic_launcher_round" />
 
             <TextView
@@ -32,66 +32,189 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_horizontal">
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/sname"
-            android:hint="@string/sname"
-            android:editable="false">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-        </EditText>
-        <EditText
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name:-"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:id="@+id/sname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="mane"
+                android:textStyle="bold"
+                android:textSize="20sp">
+
+            </TextView>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Roll No:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sroll"
-            android:hint="@string/sroll"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            >
 
-        </EditText>
-        <EditText
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scalss"
-            android:hint="@string/sclass"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            >
 
-        </EditText>
-        <EditText
+
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PrePercent:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spercent"
-            android:hint="@string/percent"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            >
 
-        </EditText>
-        <EditText
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scatagory"
-            android:hint="@string/catagory"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            >
 
-        </EditText>
-        <EditText
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Number:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scontact"
-            android:hint="@string/scontact"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            >
 
-        </EditText>
-        <EditText
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parent Contact:-"
+            android:textStyle="bold"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/pcontact"
-            android:hint="@string/scontact"
-            android:editable="false">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="mane"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            >
 
-        </EditText>
-
+        </TextView>
+    </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </FrameLayout>
 

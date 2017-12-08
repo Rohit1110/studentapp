@@ -5,5 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.resoneuronance.shahucetcell.PDfViewer">
-
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/temp"/>
 </android.support.constraint.ConstraintLayout>

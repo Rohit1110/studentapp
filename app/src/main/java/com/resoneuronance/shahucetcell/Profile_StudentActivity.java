@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +25,7 @@ import utils.Utility;
 public class Profile_StudentActivity extends AppCompatActivity {
     ProgressDialog proDialog;
 
-    EditText name, scontact, category, pcontact, sclass, roll, ppercent;
+    TextView name, scontact, category, pcontact, sclass, roll, ppercent;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Sprofile sprofile;
@@ -41,13 +42,13 @@ public class Profile_StudentActivity extends AppCompatActivity {
             proDialog.setMessage("please wait....");
             proDialog.setCancelable(false);
             proDialog.show();*/
-        name = (EditText)findViewById(R.id.sname);
-        roll = (EditText)findViewById(R.id.sroll);
-        scontact = (EditText)findViewById(R.id.scontact);
-        category = (EditText)findViewById(R.id.scatagory);
-        pcontact = (EditText)findViewById(R.id.pcontact);
-        sclass = (EditText) findViewById(R.id.scalss);
-        ppercent = (EditText)findViewById(R.id.spercent);
+        name = (TextView)findViewById(R.id.sname);
+        roll = (TextView)findViewById(R.id.sroll);
+        scontact = (TextView)findViewById(R.id.scontact);
+        category = (TextView)findViewById(R.id.scatagory);
+        pcontact = (TextView)findViewById(R.id.pcontact);
+        sclass = (TextView) findViewById(R.id.scalss);
+        ppercent = (TextView)findViewById(R.id.spercent);
         profilep=(ImageView)findViewById(R.id.profilephoto);
 
             SharedPreferences sp = getSharedPreferences("user", 0);
@@ -93,13 +94,13 @@ public class Profile_StudentActivity extends AppCompatActivity {
                                         div = document.getData().get("Div").toString();
                                     }
                                     if (document.getData().get("PrePercent") != null) {
-                                        parentcontact = document.getData().get("PrePercent").toString();
+                                        PrePercent  = document.getData().get("PrePercent").toString();
                                     }
                                     if (document.getData().get("StudentContact") != null) {
                                         studentcontact = document.getData().get("StudentContact").toString();
                                     }
                                     if (document.getData().get("ParentContact") != null) {
-                                        PrePercent = document.getData().get("ParentContact").toString();
+                                        parentcontact = document.getData().get("ParentContact").toString();
                                     }
                                     if (document.getData().get("Image") != null) {
                                         profilephoto = document.getData().get("Image").toString();

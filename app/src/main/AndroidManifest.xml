@@ -29,7 +29,6 @@
         </activity>
         <activity android:name=".Activityfullscreen" />
         <activity android:name=".CodeVariFication" />
-        <activity android:name=".ShowPDF" />
         <activity android:name=".ProgressViewActivity" />
         <activity android:name=".AnalysisShow" />
         <activity android:name=".PDfViewer" />

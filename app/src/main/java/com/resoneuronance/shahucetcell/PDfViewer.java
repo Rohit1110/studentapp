@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import adapter.CustomAdapter;
 import model.Notice;
+import utils.Utility;
 
 import static android.content.ContentValues.TAG;
 
@@ -49,6 +50,7 @@ public class PDfViewer extends AppCompatActivity {
     ProgressDialog proDialog;
     String examId, Url;
     ImageView img;
+    String examname;
 
 
     @Override
@@ -60,7 +62,11 @@ public class PDfViewer extends AppCompatActivity {
         if (bundle != null) {
 
             examId = bundle.getString("examid");
-            System.out.println("Exam Id" + examId);
+            examname=bundle.getString("testname");
+            System.out.println("Exam Id" + examId+"  "+examname);
+
+        }
+        if(Utility.isInternetOn(PDfViewer.this)) {
 
             docRef = db.collection("exams").document(examId)
 
@@ -90,7 +96,7 @@ public class PDfViewer extends AppCompatActivity {
                                     System.out.println("Directory created ...");
                                 }
 
-                                final File pdfFile = new File(logFolder, "Exams.pdf");
+                                final File pdfFile = new File(logFolder, examname+".pdf");
 
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
@@ -120,7 +126,16 @@ public class PDfViewer extends AppCompatActivity {
 
                         }
                     });
+        }else {
+            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
+            final File pdfFile = new File(logFolder, examname+".pdf");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
+
+
     }
 }

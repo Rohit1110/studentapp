@@ -1,39 +1,22 @@
 package adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.storage.StorageReference;
 import com.resoneuronance.shahucetcell.Activityfullscreen;
 import com.resoneuronance.shahucetcell.AnalysisShow;
 import com.resoneuronance.shahucetcell.CorrectkeyShow;
 import com.resoneuronance.shahucetcell.PDfViewer;
-import com.resoneuronance.shahucetcell.ProgressViewActivity;
 import com.resoneuronance.shahucetcell.R;
-import com.resoneuronance.shahucetcell.ShowPDF;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,9 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import loder.LoadImageTask;
 import model.Exam;
-import model.Notice;
 
 /**
  * Created by Rohit on 11/24/2017.
@@ -113,32 +94,13 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
         btnpapersol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Exam exam=(Exam)v.getTag();*/
 
-                /*new Thread(new Runnable() {
-                    Exam exam= getItem(position);
-                    public void run() {
-                        Uri path = Uri.fromFile(downloadFile(exam.getPSolution()));
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(path, "application/pdf");
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            getContext().startActivity(intent);
-
-                        } catch (ActivityNotFoundException e) {
-
-                                    Log.v(e+"","PDF Reader application is not installed in your device");
-                        }
-                    }
-                }).start();*/
-
-                /*Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(exam.getPSolution()));
-                getContext().startActivity(browserIntent);*/
                 Exam exam=getItem(position);
                 Intent inf=new Intent(getContext(),PDfViewer.class);
                 Bundle bundle = new Bundle();
 
                 //Add your data to bundle
+                bundle.putString("testname",exam.getTestName());
                 bundle.putString("examid",  exam.getExamid());
 
 
@@ -174,6 +136,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
+               
                 bundle.putString("examid",  exam.getExamid());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);

@@ -119,6 +119,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
+                bundle.putString("testname",exam.getTestName());
                 bundle.putString("url",  exam.getAnalysis());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
@@ -136,7 +137,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
-               
+
                 bundle.putString("examid",  exam.getExamid());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);

@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.resoneuronance.shahucetcell.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.GeneralNotice;
 import model.Notice;
@@ -42,7 +44,11 @@ public class GeneralNoticeAdapter extends ArrayAdapter<GeneralNotice> {
 
         GeneralNotice notice = getItem(position);
         txtnotice.setText(notice.getMessage());
-        noticedate.setText(notice.getDate().toString());
+        SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
+        Date mydate =notice.getDate();
+       // noticedate.setText(notice.getDate().toString());
+        String formatdate=timeStampFormat.format(mydate);
+        noticedate.setText(formatdate);
 
         return rowView;
     }

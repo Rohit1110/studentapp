@@ -24,7 +24,7 @@ import java.io.IOException;
 public class Utility {
     public  FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-      public void createAlert(Context context, String message) {
+      public static void createAlert(Context context, String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setMessage(message);
         alertDialogBuilder.setPositiveButton("ok",

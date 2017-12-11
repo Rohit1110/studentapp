@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
+
+import utils.Utility;
 
 import static android.view.View.VISIBLE;
 
@@ -199,15 +202,19 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_start_verification:
-               proDialog = new ProgressDialog(PhoneAuthActivity.this);
-                proDialog.setMessage("please wait....");
-                proDialog.setCancelable(false);
-                proDialog.show();
-                if (!validatePhoneNumber()) {
-                    proDialog.dismiss();
-                    return;
+                if(Utility.isInternetOn(PhoneAuthActivity.this)) {
+                    proDialog = new ProgressDialog(PhoneAuthActivity.this);
+                    proDialog.setMessage("please wait....");
+                    proDialog.setCancelable(false);
+                    proDialog.show();
+                    if (!validatePhoneNumber()) {
+                        proDialog.dismiss();
+                        return;
+                    }
+                    startPhoneNumberVerification(mCodeNumberField.getText().toString() + mPhoneNumberField.getText().toString());
+                }else{
+                    Toast.makeText(PhoneAuthActivity.this,"Check Internet Connection..!!",Toast.LENGTH_LONG).show();
                 }
-                startPhoneNumberVerification(mCodeNumberField.getText().toString()+mPhoneNumberField.getText().toString());
 
 
                 break;

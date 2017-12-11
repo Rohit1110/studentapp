@@ -70,9 +70,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         proDialog.dismiss();
                         if (task.isSuccessful()) {
+                            Log.d("Data",task.getResult().toString());
 
                             if (task.getResult() == null || task.getResult().size() == 0) {
-                               // utility.createAlert(getApplicationContext(), "data not found");
+                                Utility.createAlert(MainActivity.this, "Profile not found for this number "+phone);
                                 return;
                             }
 
@@ -81,11 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("Data", document.getId() + " => " + document.getData());
                                 Log.d("Name", document.getId() + " => " + document.getData().get("Name"));
 
-                                String rollno = document.getData().get("RollNo").toString();
-                                if (rollno == null || rollno.trim().length() == 0) {
-                                    //utility.createAlert(getApplicationContext(), "data not found");
-                                    return;
-                                }
+
 
                                 SharedPreferences preferences = getSharedPreferences("pref", 0);
                                 SharedPreferences.Editor editor = preferences.edit();

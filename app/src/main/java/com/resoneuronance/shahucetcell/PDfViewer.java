@@ -72,9 +72,10 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (PermissionUtil.verifyPermissions(grantResults)) {
             // All required permissions have been granted, display contacts fragment.
-            Snackbar.make(mLayout, "permission granted",
+        /*    Snackbar.make(mLayout, "permission granted",
                     Snackbar.LENGTH_SHORT)
-                    .show();
+                    .show();*/
+        Toast.makeText(PDfViewer.this,"Permission Grant",Toast.LENGTH_LONG).show();
         } else {
             Log.i(TAG, "Contacts permissions were NOT granted.");
             Snackbar.make(mLayout, "permissions were NOT granted",

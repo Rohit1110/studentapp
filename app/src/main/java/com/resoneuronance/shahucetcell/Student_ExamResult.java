@@ -67,10 +67,9 @@ public class Student_ExamResult extends Fragment {
         super.onResume();
         utility = new Utility();
 
-    /*    proDialog = new ProgressDialog(getContext());
+      proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
-        proDialog.setCancelable(false);*/
-
+        proDialog.setCancelable(false);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         String roll = preferences.getString("rollno", "");
@@ -83,16 +82,17 @@ public class Student_ExamResult extends Fragment {
                 utility.createAlert(getContext(), "Exam  not found");
                 return;
             }
-            // proDialog.show();
+            proDialog.show();
             if (studentsRef == null || studentsRef.getId() != null) {
                 final ListenerRegistration docRef = studentsRef.collection("Exams").orderBy("dateAdded", Query.Direction.DESCENDING)
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                             @Override
                             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                // proDialog.dismiss();
+                                 proDialog.dismiss();
                                 if (e != null) {
                                     Log.w(TAG, "Listen failed.", e);
+                                    proDialog.dismiss();
                                     return;
                                 }
                                 if (documentSnapshots == null || documentSnapshots.size() == 0) {
@@ -117,6 +117,7 @@ public class Student_ExamResult extends Fragment {
                                 android.R.layout.simple_list_item_1, notices));*/
                                 ExamAdapter adapter = new ExamAdapter(getActivity(), exams);
                                 list.setAdapter(adapter);
+                                proDialog.dismiss();
                             }
                         });
             }

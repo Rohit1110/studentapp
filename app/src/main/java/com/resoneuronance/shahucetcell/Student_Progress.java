@@ -140,9 +140,9 @@ public class Student_Progress extends Fragment {
     public void onResume() {
         super.onResume();
         utility = new Utility();
-        proDialog = new ProgressDialog(getContext());
+   /*     proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
-        proDialog.setCancelable(false);
+        proDialog.setCancelable(false);*/
 
 
         SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -156,22 +156,26 @@ public class Student_Progress extends Fragment {
                     utility.createAlert(getContext(), "Progress result not found");
                     return;
                 }
-                // proDialog.show();
+                 //proDialog.show();
                 final ListenerRegistration docRef = progressRef.collection("ProgressReport")
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
 
                             @Override
                             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                // proDialog.dismiss();
+                                //proDialog.dismiss();
                                 if (e != null) {
+                                    //proDialog.dismiss();
                                     Log.w(TAG, "Listen failed.", e);
                                     return;
                                 }
                                 if (documentSnapshots == null || documentSnapshots.size() == 0) {
                                     //utility.createAlert(getActivity(), "Progress not found");
+                                    //proDialog.dismiss();
                                     return;
                                 }
+                                //proDialog.dismiss();
+
                                 // exams = new ArrayList<Exam>();
                                 for (DocumentSnapshot doc : documentSnapshots) {
                                     imageUrl = doc.getString("Progressreport");

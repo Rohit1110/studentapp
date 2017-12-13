@@ -125,6 +125,7 @@ public class GeneralNotifications extends Fragment {
                                         Log.d("Name", doc.getId() + " => " + doc.getData().get("message"));
                                        GeneralNotice notice = new GeneralNotice();
                                         notice.setMessage(doc.getString("message"));
+
                                         notice.setDate(doc.getDate("createdDate"));
                                         //Toast.makeText(getContext(),doc.getDate("createdDate").toString(),Toast.LENGTH_LONG).show();
                                         notices.add(notice);

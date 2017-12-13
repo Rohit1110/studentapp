@@ -102,7 +102,7 @@ public class Student_Inbox extends Fragment {
         if (roll != null && roll.trim().length() > 0) {
            if (docRef == null && roll != null && roll.trim().length() > 0) {
                try {
-                   //proDialog.show();
+                   proDialog.show();
                    docRef = db.collection("students").document(roll).collection("Notices").orderBy("createdDate", Query.Direction.DESCENDING)
                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
@@ -111,10 +111,12 @@ public class Student_Inbox extends Fragment {
                                   //proDialog.dismiss();
                                    if (e != null) {
                                        Log.w(TAG, "Listen failed.", e);
+                                       proDialog.dismiss();
                                        return;
                                    }
                                    if (documentSnapshots == null || documentSnapshots.size() == 0) {
                                        //utility.createAlert(getActivity(), "Inbox not found");
+                                       proDialog.dismiss();
                                        return;
                                    }
 
@@ -132,6 +134,7 @@ public class Student_Inbox extends Fragment {
                                    CustomAdapter adapter = new CustomAdapter(getActivity(), notices);
                                    list.setAdapter(adapter);
                                    adapter.notifyDataSetChanged();
+                                   proDialog.dismiss();
                                }
                            });
 

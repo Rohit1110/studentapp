@@ -22,13 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
-            jniDebuggable true
+            debuggable false
+            jniDebuggable false
             signingConfig signingConfigs.config
-            renderscriptDebuggable true
-        }
-        debug {
-            signingConfig signingConfigs.config
+            renderscriptDebuggable false
         }
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,11 +33,12 @@ public class Profile_StudentActivity extends AppCompatActivity {
     String phone;
     private Utility utility;
     ImageView profilep;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile__student);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
            utility = new Utility();
             /*proDialog = new ProgressDialog(Profile_StudentActivity.this);
             proDialog.setMessage("please wait....");
@@ -67,7 +69,7 @@ public class Profile_StudentActivity extends AppCompatActivity {
 
                                 if (task.getResult() == null || task.getResult().size() == 0) {
                                     utility.createAlert(Profile_StudentActivity.this, "data not found");
-                                    return;
+                                      return;
                                 }
 
                                 for (DocumentSnapshot document : task.getResult()) {

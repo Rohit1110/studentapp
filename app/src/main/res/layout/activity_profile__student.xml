@@ -82,7 +82,7 @@
                 android:id="@+id/sname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="mane"
+
                 android:textStyle="bold"
                 android:textSize="20sp">
 
@@ -106,7 +106,7 @@
             android:id="@+id/sroll"
 
 
-            android:text="mane"
+
             android:textSize="20sp"
             android:textStyle="bold"
             >
@@ -130,7 +130,7 @@
             android:id="@+id/scalss"
 
 
-            android:text="mane"
+
             android:textSize="20sp"
             android:textStyle="bold"
             >
@@ -157,7 +157,7 @@
             android:id="@+id/spercent"
 
 
-            android:text="mane"
+
             android:textSize="20sp"
             android:textStyle="bold"
             >
@@ -181,7 +181,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/scatagory"
 
-            android:text="mane"
+
             android:textSize="20sp"
             android:textStyle="bold"
             >
@@ -206,7 +206,7 @@
             android:id="@+id/scontact"
 
 
-            android:text="mane"
+
             android:textStyle="bold"
             android:textSize="20sp"
             >
@@ -231,7 +231,7 @@
             android:id="@+id/pcontact"
 
 
-            android:text="mane"
+
             android:textStyle="bold"
             android:textSize="20sp"
             >

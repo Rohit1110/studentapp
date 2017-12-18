@@ -19,16 +19,20 @@
             android:orientation="vertical">
 
         </ListView>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nodataprogress"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/webview">
 
         </WebView>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/preport"/>
+
 
 
 

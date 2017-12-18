@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -53,12 +54,14 @@ public class GeneralNotifications extends Fragment {
     private ListenerRegistration docRef;
     private String roll;
     private Utility utility;
+    TextView txtnodata;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.general_notification, container, false);
         list = (ListView) rootView.findViewById(R.id.listgeneral);
+        txtnodata=(TextView)rootView.findViewById(R.id.generalNodata);
 
         return rootView;
 
@@ -116,6 +119,15 @@ public class GeneralNotifications extends Fragment {
                                     //proDialog.dismiss();
                                     if (e != null) {
                                         Log.w(TAG, "Listen failed.", e);
+                                        return;
+                                    }
+                                    if (documentSnapshots == null || documentSnapshots.size() == 0) {
+                                        //utility.createAlert(getActivity(), "Inbox not found");
+                                        Log.d("Both Null","Null Data");
+                                        txtnodata.setText("No notices");
+
+
+
                                         return;
                                     }
 

@@ -65,7 +65,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
         Button btnomr = (Button) rowView.findViewById(R.id.omrshow);
         Button btnpapersol = (Button) rowView.findViewById(R.id.psolshow);
         Button btnanalysis=(Button)rowView.findViewById(R.id.btnanalysis);
-        //Button btncorrectkey=(Button) rowView.findViewById(R.id.btncorrectkey);
+        Button btncorrectkey=(Button) rowView.findViewById(R.id.btncorrectkey);
        // image = (ImageView) rowView.findViewById(R.id.imageView);
 
 
@@ -128,7 +128,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 
             }
         });
-       /* btncorrectkey.setOnClickListener(new View.OnClickListener() {
+        btncorrectkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Exam exam= getItem(position);
@@ -144,7 +144,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 
 
             }
-        });*/
+        });
 
 
         return rowView;

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,11 +47,13 @@ public class Student_ExamResult extends Fragment {
     private ListView list;
     ProgressDialog proDialog;
     private Utility utility;
+    TextView  txtnodata;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_examresult, container, false);
         list = (ListView) rootView.findViewById(R.id.listexam);
+        txtnodata=(TextView)rootView.findViewById(R.id.examnodata);
         return rootView;
     }
 
@@ -97,6 +100,7 @@ public class Student_ExamResult extends Fragment {
                                 }
                                 if (documentSnapshots == null || documentSnapshots.size() == 0) {
                                     //utility.createAlert(getActivity(), "Exam result not found");
+                                    txtnodata.setText("No Exam Found");
                                     return;
                                 }
                                 exams = new ArrayList<Exam>();

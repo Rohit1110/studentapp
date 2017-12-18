@@ -59,26 +59,23 @@
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:theme="@style/AppTheme"
-        android:text="Analysis" />
+        android:text="OMR Analysis" />
 
-    <!--<Button
+    <Button
         android:id="@+id/btncorrectkey"
+
         android:layout_width="120dp"
         android:layout_height="60dp"
 
-
-        android:layout_alignBaseline="@+id/btnanalysis"
-        android:layout_alignBottom="@+id/btnanalysis"
-        android:layout_alignEnd="@+id/psolshow"
+        android:layout_marginTop="10dp"
         android:layout_alignLeft="@+id/psolshow"
-        android:layout_alignRight="@+id/psolshow"
         android:layout_alignStart="@+id/psolshow"
-
+        android:layout_below="@+id/psolshow"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="Correct Key"
+        android:text="Question analysis"
         android:textColor="@android:color/white"
-        android:theme="@style/AppTheme" />-->
+        android:theme="@style/AppTheme" />
 
 
    <!-- <ImageView

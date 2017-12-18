@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog proDialog;
     private Utility utility;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final int TIME_DELAY = 2000;
+    private static long back_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +157,17 @@ public class MainActivity extends AppCompatActivity {
                         tabLayout.setupWithViewPager(viewPager);
                     }
                 });*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + TIME_DELAY > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(), "Press once again to exit!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
 
 

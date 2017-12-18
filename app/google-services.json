@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "150039486125-063u2i4lhvascnvm2aobad0k9p2t6kb9.apps.googleusercontent.com",
+          "client_id": "150039486125-7i384ppakdru92i9m38cu22dg18li3mb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.resoneuronance.shahucetcell",
             "certificate_hash": "4b5ec6957caa3deb041e6ba7a0b26a1281ae04f1"
+          }
+        },
+        {
+          "client_id": "150039486125-ff2e9btacjpouv41ucsnmk433i6amtl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.resoneuronance.shahucetcell",
+            "certificate_hash": "7c3d489ce3111c6dea7386471512c008bea1c4ea"
           }
         },
         {

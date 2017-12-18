@@ -33,6 +33,12 @@ public class Profile_StudentActivity extends AppCompatActivity {
     String phone;
     private Utility utility;
     ImageView profilep;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

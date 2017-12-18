@@ -43,13 +43,16 @@ public class CustomAdapter extends ArrayAdapter<Notice> {
         TextView ndate= (TextView) rowView.findViewById(R.id.noticedate);
 
         Notice notice = getItem(position);
-        txtnotice.setText(notice.getMessage());
-        SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
-        Date mydate =notice.getDate();
-        // noticedate.setText(notice.getDate().toString());
-        String formatdate=timeStampFormat.format(mydate);
-        ndate.setText(formatdate);
-       // ndate.setText(notice.getDate().toString());
+        System.out.println("Length "+ notice.getMessage().length());
+
+            txtnotice.setText(notice.getMessage());
+            SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
+            Date mydate = notice.getDate();
+            // noticedate.setText(notice.getDate().toString());
+            String formatdate = timeStampFormat.format(mydate);
+            ndate.setText(formatdate);
+            // ndate.setText(notice.getDate().toString());
+
 
         return rowView;
     }

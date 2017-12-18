@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -47,16 +48,18 @@ public class Student_Inbox extends Fragment {
     String Roll;
     private ArrayList<Notice> notices;
     private ListView list;
+    TextView txtnodata;
     ProgressDialog proDialog;
     private ListenerRegistration docRef;
     private String roll;
-    private Utility utility;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_inbox, container, false);
         list = (ListView) rootView.findViewById(R.id.listnotice);
+        txtnodata=(TextView)rootView.findViewById(R.id.nodata);
         return rootView;
 
     }
@@ -86,9 +89,9 @@ public class Student_Inbox extends Fragment {
     }
 
     private void createListener(String roll) {
-        utility = new Utility();
-
-        proDialog = new ProgressDialog(getContext());
+        //utility = new Utility();
+System.out.println("Oncreate Inbox");
+      proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
         proDialog.setCancelable(false);
 
@@ -108,33 +111,47 @@ public class Student_Inbox extends Fragment {
 
                                @Override
                                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                  //proDialog.dismiss();
+                                   System.out.println("Inside snapshot listener!!");
+                                proDialog.dismiss();
                                    if (e != null) {
                                        Log.w(TAG, "Listen failed.", e);
-                                       proDialog.dismiss();
+                                       //proDialog.dismiss();
                                        return;
                                    }
                                    if (documentSnapshots == null || documentSnapshots.size() == 0) {
                                        //utility.createAlert(getActivity(), "Inbox not found");
-                                       proDialog.dismiss();
+                                       Log.d("Both Null","Null Data");
+                                       txtnodata.setText("No Notices Found");
+
+
+
                                        return;
                                    }
-
+                                   proDialog.dismiss();
                                    notices = new ArrayList<Notice>();
+
                                    for (DocumentSnapshot doc : documentSnapshots) {
+
                                        Log.d("Data", doc.getId() + " => " + doc.getData());
                                        Log.d("Name", doc.getId() + " => " + doc.getData().get("message"));
                                        Notice notice = new Notice();
                                        notice.setMessage(doc.getString("message"));
                                        notice.setDate(doc.getDate("createdDate"));
                                        notices.add(notice);
+                                       System.out.println("Data with inbox "+notices);
                                    }
+
+                                   if(notices.size() == 0) {
+                                       Log.d("Both Null","Notices Empty");
+                                       return;
+                                   }
+
                         /*list.setAdapter(new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_list_item_1, notices));*/
-                                   CustomAdapter adapter = new CustomAdapter(getActivity(), notices);
+                                   CustomAdapter adapter = new CustomAdapter(getActivity(),notices);
                                    list.setAdapter(adapter);
                                    adapter.notifyDataSetChanged();
-                                   proDialog.dismiss();
+
                                }
                            });
 

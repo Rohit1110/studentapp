@@ -43,12 +43,14 @@ public class GeneralNoticeAdapter extends ArrayAdapter<GeneralNotice> {
         TextView noticedate= (TextView) rowView.findViewById(R.id.gnoticedate);
 
         GeneralNotice notice = getItem(position);
-        txtnotice.setText(notice.getMessage());
-        SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
-        Date mydate =notice.getDate();
-       // noticedate.setText(notice.getDate().toString());
-        String formatdate=timeStampFormat.format(mydate);
-        noticedate.setText(formatdate);
+
+            txtnotice.setText(notice.getMessage());
+            SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
+            Date mydate = notice.getDate();
+            // noticedate.setText(notice.getDate().toString());
+            String formatdate = timeStampFormat.format(mydate);
+            noticedate.setText(formatdate);
+
 
         return rowView;
     }

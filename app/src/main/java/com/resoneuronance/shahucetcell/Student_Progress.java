@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +58,8 @@ public class Student_Progress extends Fragment {
     private ArrayList<Exam> exams;
     //private ListView list;
     String imageUrl;
-    ImageView imageView;
+    TextView txtxnodata;
+
     WebView web;
     private Utility utility;
 
@@ -66,6 +68,8 @@ public class Student_Progress extends Fragment {
         View rootView = inflater.inflate(R.layout.layout_progress, container, false);
         //  list=(ListView)rootView.findViewById(R.id.listprogress);
         // imageView = (ImageView) rootView.findViewById(R.id.preport);
+        txtxnodata=(TextView)rootView.findViewById(R.id.nodataprogress);
+
         web = (WebView) rootView.findViewById(R.id.webview);
         return rootView;
     }
@@ -136,13 +140,16 @@ public class Student_Progress extends Fragment {
         }
     }
 
+
+
+
     @Override
     public void onResume() {
         super.onResume();
         utility = new Utility();
-   /*     proDialog = new ProgressDialog(getContext());
+       proDialog = new ProgressDialog(getContext());
         proDialog.setMessage("please wait....");
-        proDialog.setCancelable(false);*/
+        proDialog.setCancelable(false);
 
 
         SharedPreferences preferences = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -153,17 +160,17 @@ public class Student_Progress extends Fragment {
             if (roll != null && roll.trim().length() > 0) {
                 DocumentReference progressRef = db.collection("students").document(roll);
                 if (progressRef == null || progressRef.getId() == null) {
-                    utility.createAlert(getContext(), "Progress result not found");
+                    //utility.createAlert(getContext(), "Progress result not found");
                     return;
                 }
-                 //proDialog.show();
+                proDialog.show();
                 final ListenerRegistration docRef = progressRef.collection("ProgressReport")
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
 
                             @Override
                             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                //proDialog.dismiss();
+                                proDialog.dismiss();
                                 if (e != null) {
                                     //proDialog.dismiss();
                                     Log.w(TAG, "Listen failed.", e);
@@ -172,9 +179,10 @@ public class Student_Progress extends Fragment {
                                 if (documentSnapshots == null || documentSnapshots.size() == 0) {
                                     //utility.createAlert(getActivity(), "Progress not found");
                                     //proDialog.dismiss();
+                                    txtxnodata.setText("No Progress Report Found");
                                     return;
                                 }
-                                //proDialog.dismiss();
+                                proDialog.dismiss();
 
                                 // exams = new ArrayList<Exam>();
                                 for (DocumentSnapshot doc : documentSnapshots) {
@@ -196,6 +204,7 @@ public class Student_Progress extends Fragment {
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        proDialog.dismiss();
                                         web.getSettings().setBuiltInZoomControls(true);
                                         web.loadUrl(Uri.fromFile(pdfFile).toString());
 
@@ -204,7 +213,7 @@ public class Student_Progress extends Fragment {
                                     @Override
                                     public void onFailure(@NonNull Exception exception) {
                                         // Handle any errors
-
+                                          proDialog.dismiss();
                                         System.out.println("Exception====> " + exception);
                                         exception.printStackTrace();
                                     }

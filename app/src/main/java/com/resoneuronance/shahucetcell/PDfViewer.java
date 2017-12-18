@@ -58,7 +58,7 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
     private ListenerRegistration docRef;
     ProgressDialog proDialog;
     String examId, Url;
-    ImageView img;
+    //ImageView img;
     String examname;
     private View mLayout;
 
@@ -75,7 +75,7 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
         /*    Snackbar.make(mLayout, "permission granted",
                     Snackbar.LENGTH_SHORT)
                     .show();*/
-        Toast.makeText(PDfViewer.this,"Permission Grant",Toast.LENGTH_LONG).show();
+        //Toast.makeText(PDfViewer.this,"Permission Grant",Toast.LENGTH_LONG).show();
         } else {
             Log.i(TAG, "Contacts permissions were NOT granted.");
             Snackbar.make(mLayout, "permissions were NOT granted",
@@ -89,8 +89,8 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pdf_viewer);
-        img = (ImageView) findViewById(R.id.temp);
+       // setContentView(R.layout.activity_pdf_viewer);
+       // img = (ImageView) findViewById(R.id.temp);
         // Here, thisActivity is the current activity
 
         isStoragePermissionGranted();
@@ -101,6 +101,10 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
             examId = bundle.getString("examid");
             examname=bundle.getString("testname");
             System.out.println("Exam Id" + examId+"  "+examname);
+            proDialog = new ProgressDialog(PDfViewer.this);
+            proDialog.setMessage("please wait....");
+            proDialog.setCancelable(false);
+            proDialog.show();
 
         }
        if(Utility.isInternetOn(PDfViewer.this)) {
@@ -146,6 +150,7 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        proDialog.hide();
 
                                        // System.out.println("OnSuccess=>> " + xmlFile.getAbsolutePath());
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -172,7 +177,9 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
 
                         }
                     });
+           proDialog.hide();
      }else {
+           proDialog.hide();
            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
             final File pdfFile = new File(logFolder, examname+".pdf");

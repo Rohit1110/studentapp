@@ -52,6 +52,7 @@ public class Student_ExamResult extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_examresult, container, false);
+        getActivity().setTitle("Exam Section");
         list = (ListView) rootView.findViewById(R.id.listexam);
         txtnodata=(TextView)rootView.findViewById(R.id.examnodata);
         return rootView;

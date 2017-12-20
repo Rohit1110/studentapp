@@ -60,6 +60,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.general_notification, container, false);
+        getActivity().setTitle("College Wide Notices");
         list = (ListView) rootView.findViewById(R.id.listgeneral);
         txtnodata=(TextView)rootView.findViewById(R.id.generalNodata);
 

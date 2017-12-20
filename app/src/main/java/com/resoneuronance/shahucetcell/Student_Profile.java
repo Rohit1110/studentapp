@@ -55,7 +55,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Student_Profile extends Fragment {
     ProgressDialog proDialog;
 
-    EditText name, scontact, category, pcontact, sclass, roll, ppercent;
+    TextView name, scontact, category, pcontact, sclass, roll, ppercent;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Sprofile sprofile;
@@ -66,16 +66,17 @@ public class Student_Profile extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.layout_profile, container, false);
+        View rootView = inflater.inflate(R.layout.activity_profile__student, container, false);
+        getActivity().setTitle("Student Profile");
 
 
-        name = (EditText) rootView.findViewById(R.id.sname);
-        roll = (EditText) rootView.findViewById(R.id.sroll);
-       scontact = (EditText) rootView.findViewById(R.id.scontact);
-        category = (EditText) rootView.findViewById(R.id.scatagory);
-       pcontact = (EditText) rootView.findViewById(R.id.pcontact);
-        sclass = (EditText) rootView.findViewById(R.id.scalss);
-        ppercent = (EditText) rootView.findViewById(R.id.spercent);
+        name = (TextView)rootView.findViewById(R.id.sname);
+        roll = (TextView)rootView.findViewById(R.id.sroll);
+        scontact = (TextView)rootView.findViewById(R.id.scontact);
+        category = (TextView)rootView.findViewById(R.id.scatagory);
+        pcontact = (TextView)rootView.findViewById(R.id.pcontact);
+        sclass = (TextView) rootView.findViewById(R.id.scalss);
+        ppercent = (TextView)rootView.findViewById(R.id.spercent);
         profilep=(ImageView)rootView.findViewById(R.id.profilephoto);
 
 
@@ -107,7 +108,7 @@ public class Student_Profile extends Fragment {
                         if (task.isSuccessful()) {
 
                             if (task.getResult() == null || task.getResult().size() == 0) {
-                                utility.createAlert(getContext(), "data not found");
+                                //utility.createAlert(getContext(), "data not found");
                                 return;
                             }
 
@@ -118,7 +119,7 @@ public class Student_Profile extends Fragment {
 
                                 String rollno = document.getData().get("RollNo").toString();
                                 if (rollno == null || rollno.trim().length() == 0) {
-                                    utility.createAlert(getContext(), "data not found");
+                                    //utility.createAlert(getContext(), "data not found");
                                     return;
                                 }
                                 String name = null, scategory = null, sclass = null, div = null, parentcontact = null, studentcontact = null, PrePercent = null,profilephoto=null;

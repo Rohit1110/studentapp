@@ -68,6 +68,7 @@ public class Student_Progress extends Fragment {
         View rootView = inflater.inflate(R.layout.layout_progress, container, false);
         //  list=(ListView)rootView.findViewById(R.id.listprogress);
         // imageView = (ImageView) rootView.findViewById(R.id.preport);
+        getActivity().setTitle("Progress Report");
         txtxnodata=(TextView)rootView.findViewById(R.id.nodataprogress);
 
         web = (WebView) rootView.findViewById(R.id.webview);

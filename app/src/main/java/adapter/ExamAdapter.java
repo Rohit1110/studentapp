@@ -131,12 +131,6 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 bundle.putString("url",  exam.getAnalysis());
                 inf.putExtras(bundle);
                 context.startActivity(inf);
-
-                //proDialog.dismiss();
-
-
-
-
             }
         });
         btncorrectkey.setOnClickListener(new View.OnClickListener() {

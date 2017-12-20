@@ -32,5 +32,9 @@
     <string name="hint_code_number">+91</string>
     <string name="profile">Profile</string>
     <string name="permission_contacts_rationale">Contacts permissions are needed to demonstrate access.</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

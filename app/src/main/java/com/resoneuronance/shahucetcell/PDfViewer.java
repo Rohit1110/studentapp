@@ -101,8 +101,9 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
             examId = bundle.getString("examid");
             examname=bundle.getString("testname");
             System.out.println("Exam Id" + examId+"  "+examname);
+
             proDialog = new ProgressDialog(PDfViewer.this);
-            proDialog.setMessage("please wait....");
+            proDialog.setMessage("please wait to show Paper Soluton....");
             proDialog.setCancelable(false);
             proDialog.show();
 
@@ -111,11 +112,15 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
            // requeststoragepermission();
 
 
-            docRef = db.collection("exams").document(examId)
+
+
+           docRef = db.collection("exams").document(examId)
 
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+
                         @Override
                         public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                            //proDialog.dismiss();
 
                             try {
                                 if (e != null) {
@@ -150,13 +155,15 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        proDialog.hide();
+
 
                                        // System.out.println("OnSuccess=>> " + xmlFile.getAbsolutePath());
+
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
                                         intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
+                                        //proDialog.dismiss();
                                         finish();
 
                                     }
@@ -177,9 +184,9 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
 
                         }
                     });
-           proDialog.hide();
+          // proDialog.dismiss();
      }else {
-           proDialog.hide();
+           //proDialog.dismiss();
            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
             final File pdfFile = new File(logFolder, examname+".pdf");

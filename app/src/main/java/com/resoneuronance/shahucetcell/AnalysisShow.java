@@ -1,5 +1,6 @@
 package com.resoneuronance.shahucetcell;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -24,12 +25,18 @@ public class AnalysisShow extends AppCompatActivity {
     WebView webView;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference httpsReference;
+    ProgressDialog proDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis_show);
         webView = (WebView) findViewById(R.id.analysiswebview);
+        proDialog = new ProgressDialog(AnalysisShow.this);
+        proDialog.setMessage("please wait....");
+        //proDialog.setCancelable(false);
+        proDialog.show();
+       proDialog.dismiss();
         Bundle bundle = getIntent().getExtras();//Extract the data…
         if (bundle != null) {
             url = bundle.getString("url");
@@ -41,6 +48,7 @@ public class AnalysisShow extends AppCompatActivity {
         }
 
         if (Utility.isInternetOn(AnalysisShow.this)) {
+
             httpsReference = storage.getReferenceFromUrl(url);
 
             System.out.println("Reference is created !!" + httpsReference);
@@ -51,7 +59,7 @@ public class AnalysisShow extends AppCompatActivity {
                 logFolder.mkdirs();
                 System.out.println("Directory created ...");
             }
-
+            //proDialog.dismiss();
             final File pdfFile = new File(logFolder, examname + ".html");
 
             httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {

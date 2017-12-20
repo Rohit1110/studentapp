@@ -1,16 +1,24 @@
 package com.resoneuronance.shahucetcell;
 
+import android.*;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,36 +44,115 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import adapter.ImageWarehouse;
+import utils.PermissionUtil;
+import utils.Utility;
 
+import static android.content.ContentValues.TAG;
 import static utils.Utility.loadBitmap;
 import static utils.Utility.saveFile;
 
-public class Activityfullscreen extends AppCompatActivity {
+public class Activityfullscreen extends AppCompatActivity  implements ActivityCompat.OnRequestPermissionsResultCallback {
     private Bitmap image;
     private String imgUrl;
     private String imageName;
     private ImageView img;
+    ProgressDialog proDialog;
+    StorageReference httpsReference;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private View mLayout;
+    String examname;
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (PermissionUtil.verifyPermissions(grantResults)) {
+            // All required permissions have been granted, display contacts fragment.
+        /*    Snackbar.make(mLayout, "permission granted",
+                    Snackbar.LENGTH_SHORT)
+                    .show();*/
+            //Toast.makeText(PDfViewer.this,"Permission Grant",Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(TAG, "Contacts permissions were NOT granted.");
+            Snackbar.make(mLayout, "permissions were NOT granted",
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activityfullscreen);
+        proDialog = new ProgressDialog(Activityfullscreen.this);
+           isStoragePermissionGranted();
+
+        proDialog.setMessage("please wait....");
+        //proDialog.setCancelable(false);
+        proDialog.show();
+
+
         img = (ImageView) findViewById(R.id.dimage);
         Bundle bundle = getIntent().getExtras();//Extract the data…
         if (bundle != null) {
 
             imgUrl = bundle.getString("url");
-            System.out.println("URL==>>>  "+imgUrl);
+            examname = bundle.getString("testname");
+            System.out.println("URL==>>>  " + imgUrl);
             //imageName = bundle.getString("exam");
             // new Bitmapviewer().execute();
+        }
+        if(Utility.isInternetOn(Activityfullscreen.this)) {
 
-            Glide.with(Activityfullscreen.this)
+            httpsReference = storage.getReferenceFromUrl(imgUrl);
+
+            System.out.println("Reference is created !!" + httpsReference);
+
+            //File dir = new File(Environment.getDataDirectory() + "/ShahuApp/");
+            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
+                               /* java.io.File xmlFile = new java.io.File((PDfViewer.this
+                                        .getApplicationContext().getFileStreamPath("CW-09.pdf")
+                                        .getPath()));
+                                System.out.println("File path online: "+xmlFile);*/
+
+            if (!logFolder.exists()) {
+                logFolder.mkdirs();
+                System.out.println("Directory created ...");
+            }
+
+            final File pdfFile = new File(logFolder, examname + "Omr.jpg");
+            //final File pdfFile=xmlFile;
+            System.out.println("File PDF===>>>" + pdfFile);
+            httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+
+                    // System.out.println("OnSuccess=>> " + xmlFile.getAbsolutePath());
+
+                    /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    //proDialog.dismiss();
+                    finish();
+            */
+
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+
+           /* Glide.with(Activityfullscreen.this)
                     .load(imgUrl)
 
                     .into(img);
+            proDialog.dismiss();*/
 
-        }
+                }
 
 
        /* FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -87,7 +174,6 @@ public class Activityfullscreen extends AppCompatActivity {
                 // Handle any errors
             }
         });*/
-
 
 
 // ImageView in your Activity
@@ -117,41 +203,40 @@ public class Activityfullscreen extends AppCompatActivity {
                     );*/
 
 
+            });
+        }else {
+            //proDialog.dismiss();
+            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
+            final File pdfFile = new File(logFolder, examname+"Omr.jpg");
 
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
-    private class Bitmapviewer extends AsyncTask<Void, Void, Bitmap> {
 
-        @Override
-        protected Bitmap doInBackground(Void... voids) {
-            try {
-                URL url = new URL(imgUrl);
-                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (IOException e) {
-                System.out.println(e);
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED|| checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                return false;
             }
-            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-
-            String mImageName = "shahu" + timeStamp + ".jpg";
-            try {
-                saveFile(getApplicationContext(), image, imageName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            getImage();
-        }
-
-        private void getImage() {
-            Bitmap b = loadBitmap(getApplicationContext(), imageName);
-            img.setImageBitmap(b);
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
         }
     }
 

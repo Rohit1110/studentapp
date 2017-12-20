@@ -1,6 +1,7 @@
 package adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +47,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
     String dest_file_path = "test.pdf";
     int downloadedSize = 0, totalsize;
     float per = 0;
+    ProgressDialog proDialog;
     public ExamAdapter(Activity context, ArrayList items) {
 
 
@@ -74,6 +76,9 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
         name=exam.getTestName();
         omrimageUrl=exam.getOMR();
         parerImageUrl=exam.getPSolution();
+        proDialog = new ProgressDialog(getContext());
+        proDialog.setMessage("please wait....");
+        proDialog.dismiss();
         btnomr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +88,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 
                 //Add your data to bundle
                 bundle.putString("url",  exam.getOMR());
-
+                bundle.putString("testname",exam.getTestName());
 
                 //Add the bundle to the intent
                 inf.putExtras(bundle);
@@ -113,16 +118,22 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
         btnanalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Exam exam= getItem(position);
 
-                Intent inf=new Intent(getContext(),AnalysisShow.class);
+
+                //proDialog.setCancelable(false);
+                //proDialog.show();
+               Exam exam= getItem(position);
+               Intent inf=new Intent(getContext(),AnalysisShow.class);
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
                 bundle.putString("testname",exam.getTestName());
                 bundle.putString("url",  exam.getAnalysis());
                 inf.putExtras(bundle);
-                getContext().startActivity(inf);
+                context.startActivity(inf);
+
+                //proDialog.dismiss();
+
 
 
 
@@ -139,6 +150,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 //Add your data to bundle
 
                 bundle.putString("examid",  exam.getExamid());
+                bundle.putString("testname",exam.getTestName());
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
 

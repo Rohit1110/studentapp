@@ -103,7 +103,7 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
             System.out.println("Exam Id" + examId+"  "+examname);
 
             proDialog = new ProgressDialog(PDfViewer.this);
-            proDialog.setMessage("please wait to show Paper Soluton....");
+            proDialog.setMessage("please wait .....");
             proDialog.setCancelable(false);
             proDialog.show();
 

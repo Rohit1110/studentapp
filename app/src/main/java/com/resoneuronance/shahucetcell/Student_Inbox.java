@@ -59,6 +59,8 @@ public class Student_Inbox extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_inbox, container, false);
         getActivity().setTitle("Inbox");
+
+
         list = (ListView) rootView.findViewById(R.id.listnotice);
         txtnodata=(TextView)rootView.findViewById(R.id.nodata);
         return rootView;

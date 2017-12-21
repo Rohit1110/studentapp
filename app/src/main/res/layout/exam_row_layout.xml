@@ -4,6 +4,7 @@
     android:paddingLeft="10dip"
     android:paddingTop="10dip"
     android:paddingBottom="10dip"
+    android:background="@android:color/darker_gray"
 
 
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -12,70 +13,64 @@
         android:id="@+id/examshow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-             android:text="Exam Name"
+        android:gravity="left"
+        android:text="Exam Name"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/omrshow"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
        android:layout_below="@+id/examshow"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme"
+
+        android:background="@android:color/transparent"
+
         android:text="OMR Sheet" />
 
     <Button
         android:id="@+id/psolshow"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
 
+        android:layout_marginTop="10dp"
 
-        android:layout_alignBaseline="@+id/omrshow"
-        android:layout_alignBottom="@+id/omrshow"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-
-        android:layout_marginRight="20dp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme"
+        android:background="@android:color/transparent"
         android:text="Paper Solution" />
 
     <Button
         android:id="@+id/btnanalysis"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/omrshow"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
 
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme"
+        android:layout_marginTop="10dp"
+
+        android:background="@android:color/transparent"
         android:text="OMR Analysis" />
 
     <Button
         android:id="@+id/btncorrectkey"
-
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_below="@+id/examshow"
         android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/psolshow"
-        android:layout_alignStart="@+id/psolshow"
-        android:layout_below="@+id/psolshow"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
+
+        android:background="@android:color/transparent"
+
         android:text="Question analysis"
-        android:textColor="@android:color/white"
-        android:theme="@style/AppTheme" />
+        />
+
+    </LinearLayout>
 
 
    <!-- <ImageView

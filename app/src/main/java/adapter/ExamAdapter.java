@@ -26,7 +26,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.Exam;
 
@@ -42,7 +44,7 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
     String omrimageUrl;
     String parerImageUrl;
     private ImageView img;
-    private TextView txtexam;
+    private TextView txtexam,txtdate;
     private String name;
     String dest_file_path = "test.pdf";
     int downloadedSize = 0, totalsize;
@@ -68,11 +70,17 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
         Button btnpapersol = (Button) rowView.findViewById(R.id.psolshow);
         Button btnanalysis=(Button)rowView.findViewById(R.id.btnanalysis);
         Button btncorrectkey=(Button) rowView.findViewById(R.id.btncorrectkey);
+        txtdate=(TextView)rowView.findViewById(R.id.examdate);
        // image = (ImageView) rowView.findViewById(R.id.imageView);
 
 
         Exam exam = getItem(position);
         txtexam.setText(exam.getTestName());
+        SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd-MMM-yy");
+        Date mydate = exam.getExamdate();
+        // noticedate.setText(notice.getDate().toString());
+        String formatdate = timeStampFormat.format(mydate);
+        txtdate.setText(formatdate);
         name=exam.getTestName();
         omrimageUrl=exam.getOMR();
         parerImageUrl=exam.getPSolution();
@@ -88,7 +96,8 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 
                 //Add your data to bundle
                 bundle.putString("url",  exam.getOMR());
-                bundle.putString("testname",exam.getTestName());
+              String  test = exam.getTestName().replaceAll("\\p{P}","");
+                bundle.putString("testname",test);
 
                 //Add the bundle to the intent
                 inf.putExtras(bundle);
@@ -105,7 +114,8 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
                 //Add your data to bundle
-                bundle.putString("testname",exam.getTestName());
+                String  test = exam.getTestName().replaceAll("\\p{P}","");
+                bundle.putString("testname",test);
                 bundle.putString("examid",  exam.getExamid());
 
 
@@ -127,7 +137,8 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
                 Bundle bundle = new Bundle();
 
 //Add your data to bundle
-                bundle.putString("testname",exam.getTestName());
+                String  test = exam.getTestName().replaceAll("\\p{P}","");
+                bundle.putString("testname",test);
                 bundle.putString("url",  exam.getAnalysis());
                 inf.putExtras(bundle);
                 context.startActivity(inf);
@@ -144,7 +155,8 @@ public class ExamAdapter extends ArrayAdapter<Exam>  {
 //Add your data to bundle
 
                 bundle.putString("examid",  exam.getExamid());
-                bundle.putString("testname",exam.getTestName());
+                String  test = exam.getTestName().replaceAll("\\p{P}","");
+                bundle.putString("testname",test);
                 inf.putExtras(bundle);
                 getContext().startActivity(inf);
 

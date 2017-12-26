@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.general_notification, container, false);
-        getActivity().setTitle("College Wide Notices");
+        getActivity().setTitle(Html.fromHtml("<font color='#ffffff'>General Notices</font>"));
         list = (ListView) rootView.findViewById(R.id.listgeneral);
         txtnodata=(TextView)rootView.findViewById(R.id.generalNodata);
 
@@ -87,7 +88,7 @@ public class GeneralNotifications extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-      createListener();
+      //createListener();
     }
 
     private void createListener() {
@@ -133,13 +134,17 @@ public class GeneralNotifications extends Fragment {
                                     }
 
                                     notices = new ArrayList<GeneralNotice>();
+                                    GeneralNotice notice=null;
                                     for (DocumentSnapshot doc : documentSnapshots) {
                                         Log.d("Data", doc.getId() + " => " + doc.getData());
                                         Log.d("Name", doc.getId() + " => " + doc.getData().get("message"));
-                                       GeneralNotice notice = new GeneralNotice();
-                                        notice.setMessage(doc.getString("message"));
-
-                                        notice.setDate(doc.getDate("createdDate"));
+                                       notice = new GeneralNotice();
+                                       if(doc.getString("message")!=null) {
+                                           notice.setMessage(doc.getString("message"));
+                                       }
+                                        if(doc.getDate("createdDate")!=null) {
+                                            notice.setDate(doc.getDate("createdDate"));
+                                        }
                                         //Toast.makeText(getContext(),doc.getDate("createdDate").toString(),Toast.LENGTH_LONG).show();
                                         notices.add(notice);
                                     }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 /**
  * Created by Rohit on 11/24/2017.
  */
@@ -14,6 +16,15 @@ public class Exam {
     private String analysis;
     private String correctkey;
     private String examid;
+    private Date examdate;
+
+    public Date getExamdate() {
+        return examdate;
+    }
+
+    public void setExamdate(Date examdate) {
+        this.examdate = examdate;
+    }
 
     public String getExamid() {
         return examid;

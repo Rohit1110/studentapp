@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,7 @@ public class Student_ExamResult extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_examresult, container, false);
-        getActivity().setTitle("Exam Section");
+        getActivity().setTitle(Html.fromHtml("<font color='#ffffff'>Exam Section </font>"));
         list = (ListView) rootView.findViewById(R.id.listexam);
         txtnodata=(TextView)rootView.findViewById(R.id.examnodata);
         return rootView;
@@ -88,7 +89,7 @@ public class Student_ExamResult extends Fragment {
             }
             proDialog.show();
             if (studentsRef == null || studentsRef.getId() != null) {
-                final ListenerRegistration docRef = studentsRef.collection("Exams").orderBy("dateAdded", Query.Direction.DESCENDING)
+                final ListenerRegistration docRef = studentsRef.collection("Exams").orderBy("examDate", Query.Direction.DESCENDING)
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
                             @Override
@@ -105,17 +106,29 @@ public class Student_ExamResult extends Fragment {
                                     return;
                                 }
                                 exams = new ArrayList<Exam>();
+                                Exam exam = null;
                                 for (DocumentSnapshot doc : documentSnapshots) {
-                                    Log.d("Data", doc.getId() + " => " + doc.getData());
-                                    Exam exam = new Exam();
-                                    exam.setTestName(doc.getString("TestName"));
-                                    exam.setOMR(doc.getString("OMR"));
-                                    //exam.setPSolution(doc.getString("PSolution"));
-                                    exam.setProgressReport(doc.getString("Progressreport"));
-                                    exam.setAnalysis(doc.getString("Analysis"));
-                                    //exam.setCorrectkey(doc.getString("correctedAnswerFileUrl"));
-                                    exam.setExamid(doc.getString("examID"));
-                                    exams.add(exam);
+                                    exam=new Exam();
+                                    if(doc.getDate("examDate")!=null) {
+                                        Log.d("Data", doc.getId() + " => " + doc.getData());
+
+                                        if (doc.getString("TestName") != null)
+                                        exam.setTestName(doc.getString("TestName"));
+                                        if (doc.getString("OMR") != null)
+                                        exam.setOMR(doc.getString("OMR"));
+                                        //exam.setPSolution(doc.getString("PSolution"));
+                                        if(doc.getString("Progressreport")!=null)
+                                        exam.setProgressReport(doc.getString("Progressreport"));
+                                        if (doc.getString("Analysis") != null)
+                                        exam.setAnalysis(doc.getString("Analysis"));
+                                        //exam.setCorrectkey(doc.getString("correctedAnswerFileUrl"));
+                                        if (doc.getString("examID") != null)
+                                            exam.setExamid(doc.getString("examID"));
+                                        if (doc.getDate("examDate") != null) {
+                                            exam.setExamdate(doc.getDate("examDate"));
+                                        }
+                                        exams.add(exam);
+                                    }
 
                                 }
                         /*list.setAdapter(new ArrayAdapter<String>(getActivity(),

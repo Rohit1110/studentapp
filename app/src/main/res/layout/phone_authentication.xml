@@ -26,9 +26,10 @@
 
         <TextView
             android:id="@+id/title_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+
+            android:gravity="center"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/app_name"
             android:textSize="20sp"
@@ -37,7 +38,7 @@
 
     <LinearLayout
         android:id="@+id/layoutauth"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="16dp"
@@ -82,7 +83,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/start_phone_auth"
                 android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:theme="@style/AppTheme" />
 
 
@@ -113,9 +114,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="@string/verify_phone_auth"
-                android:background="@color/colorPrimary"
+
                 android:theme="@style/AppTheme"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:background="@color/colorAccent"/>
 
             <Button
                 android:id="@+id/button_resend"

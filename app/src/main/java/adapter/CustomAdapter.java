@@ -22,8 +22,8 @@ import model.Notice;
 
 public class CustomAdapter extends ArrayAdapter<Notice> {
 
-    private final Activity context;
-    private final ArrayList<Notice> items;
+    private  Activity context;
+    private  ArrayList<Notice> items;
 
     public CustomAdapter (Activity context, ArrayList items) {
 

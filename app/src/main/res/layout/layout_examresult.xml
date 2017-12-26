@@ -17,9 +17,8 @@
             android:id="@+id/listexam"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="8"
-            android:layout_marginLeft="7dip"
-            android:layout_marginRight="7dip"
+            android:layout_weight="05"
+
             android:background="@color/white"
 
             android:dividerHeight="5.0sp"

@@ -7,6 +7,9 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -37,13 +40,19 @@ public class CorrectkeyShow extends AppCompatActivity {
     private ListenerRegistration docRef;
     ProgressDialog proDialog;
     String examname;
-
+     WebView web;
     ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_correctkey_show);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.stausbar));
+        }
         proDialog = new ProgressDialog(CorrectkeyShow.this);
         proDialog.setMessage("please wait....");
         //proDialog.setCancelable(false);
@@ -52,9 +61,11 @@ public class CorrectkeyShow extends AppCompatActivity {
         if (bundle != null) {
 
             examId = bundle.getString("examid");
+            System.out.println("Exam id = "+examId);
             examname=bundle.getString("testname");
 
             img = (ImageView) findViewById(R.id.correctkey);
+            web=(WebView)findViewById(R.id.correctke);
         }
             docRef = db.collection("exams").document(examId)
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -68,7 +79,7 @@ public class CorrectkeyShow extends AppCompatActivity {
 
 
                             imgUrl = documentSnapshot.getString("correctedAnswerFileUrl");
-
+                            System.out.println("Exam url = "+imgUrl);
                             if(Utility.isInternetOn(CorrectkeyShow.this)) {
 
                                 httpsReference = storage.getReferenceFromUrl(imgUrl);
@@ -87,7 +98,7 @@ public class CorrectkeyShow extends AppCompatActivity {
                                     System.out.println("Directory created ...");
                                 }
 
-                                final File pdfFile = new File(logFolder, examname + "qanalysis.jpg");
+                                final File pdfFile = new File(logFolder, examname + "qanalysis.html");
                                 //final File pdfFile=xmlFile;
                                 System.out.println("File PDF===>>>" + pdfFile);
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -106,11 +117,13 @@ public class CorrectkeyShow extends AppCompatActivity {
             */
 
 
-                                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
+                                        /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(pdfFile), "image*//*");
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
-                                        finish();
+                                        finish();*/
+                                        web.getSettings().setBuiltInZoomControls(true);
+                                        web.loadUrl(Uri.fromFile(pdfFile).toString());
 
 
                                     }
@@ -123,13 +136,15 @@ public class CorrectkeyShow extends AppCompatActivity {
                                 //proDialog.dismiss();
                                 final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
-                                final File pdfFile = new File(logFolder, examname+"qanalysis.jpg");
+                                final File pdfFile = new File(logFolder, examname+"qanalysis.html");
 
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
+                               /* Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(pdfFile), "image*//*");
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                finish();
+                                finish();*/
+                                web.getSettings().setBuiltInZoomControls(true);
+                                web.loadUrl(Uri.fromFile(pdfFile).toString());
                             }
                         }
                     });

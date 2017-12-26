@@ -16,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String phone;
     private ProgressDialog proDialog;
+    private static final int TIME_DELAY = 2000;
+    private static long back_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,13 @@ public class MainActivity extends AppCompatActivity
         Log.v("SSSS", phone);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //changing statusbar color
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.stausbar));
+        }
         db.collection("students")
                 .whereEqualTo("StudentContact", phone)
                 .get()
@@ -83,6 +95,7 @@ public class MainActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -98,9 +111,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        } else if (back_pressed + TIME_DELAY > System.currentTimeMillis()) {
+                super.onBackPressed();
+            } else {
+                Toast.makeText(getBaseContext(), "Press once again to exit!",
+                        Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+            }
+
+
+
+
     }
 
 
@@ -127,7 +148,10 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_progress) {
             fragment = new Student_Progress();
 
-        }
+        }else if (id == R.id.nav_feedback) {
+           fragment = new Student_Feedback();
+
+       }
         else if (id == R.id.nav_pofile) {
             fragment = new Student_Profile();
 

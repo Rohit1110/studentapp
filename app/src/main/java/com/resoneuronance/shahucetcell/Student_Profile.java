@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class Student_Profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_profile__student, container, false);
-        getActivity().setTitle("Student Profile");
+        getActivity().setTitle(Html.fromHtml("<font color='#ffffff'>Student Profile </font>"));
 
 
         name = (TextView)rootView.findViewById(R.id.sname);

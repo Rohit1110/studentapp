@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#b2b2d8</color>
+    <color name="colorPrimary">#FF5722</color>
     <color name="colorPrimaryDark">#0097a7</color>
-    <color name="colorAccent">#b2b2d8</color>
+    <color name="colorAccent">#448AFF</color>
     <color name="navheader">#000019</color>
     <color name="txtcolor">#ffffff</color>
+    <color name="stausbar">#E64A19</color>
 
 
     <color name="bg_login">#26ae90</color>

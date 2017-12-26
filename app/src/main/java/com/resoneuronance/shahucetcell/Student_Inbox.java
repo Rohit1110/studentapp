@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class Student_Inbox extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_inbox, container, false);
-        getActivity().setTitle("Inbox");
+        getActivity().setTitle(Html.fromHtml("<font color='#ffffff'>Inbox </font>"));
 
 
         list = (ListView) rootView.findViewById(R.id.listnotice);
@@ -132,14 +133,19 @@ System.out.println("Oncreate Inbox");
                                    }
                                    proDialog.dismiss();
                                    notices = new ArrayList<Notice>();
-
+                                   Notice notice=null;
                                    for (DocumentSnapshot doc : documentSnapshots) {
 
                                        Log.d("Data", doc.getId() + " => " + doc.getData());
                                        Log.d("Name", doc.getId() + " => " + doc.getData().get("message"));
-                                       Notice notice = new Notice();
-                                       notice.setMessage(doc.getString("message"));
-                                       notice.setDate(doc.getDate("createdDate"));
+                                       notice = new Notice();
+                                       if(doc.getString("message")!=null)
+                                       {
+                                           notice.setMessage(doc.getString("message"));
+                                       }
+                                       if(doc.getDate("createdDate")!=null) {
+                                           notice.setDate(doc.getDate("createdDate"));
+                                       }
                                        notices.add(notice);
                                        System.out.println("Data with inbox "+notices);
                                    }

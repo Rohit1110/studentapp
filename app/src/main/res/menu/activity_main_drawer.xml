@@ -7,18 +7,19 @@
     <group android:checkableBehavior="single">
          <item
             android:id="@+id/nav_general_Notices"
+             android:icon="@mipmap/general_notices"
             android:title="General Notices" />
         <item
             android:id="@+id/nav_inbox"
-
+            android:icon="@mipmap/inbox"
             android:title="Inbox" />
         <item
             android:id="@+id/nav_exam"
-
+            android:icon="@mipmap/exam_session"
             android:title="Exam Section" />
         <item
             android:id="@+id/nav_progress"
-
+            android:icon="@mipmap/progress_report"
             android:title="Progress Report" />
     </group>
 <hr></hr>
@@ -26,11 +27,15 @@
         <menu>
             <item
                 android:id="@+id/nav_pofile"
-
+                android:icon="@mipmap/profile"
                 android:title="Profile" />
             <item
+                android:id="@+id/nav_feedback"
+                android:icon="@mipmap/feedback"
+                android:title="Feedback" />
+            <item
                 android:id="@+id/nav_logout"
-
+                android:icon="@mipmap/logout"
                 android:title="Log Out" />
         </menu>
     </item>

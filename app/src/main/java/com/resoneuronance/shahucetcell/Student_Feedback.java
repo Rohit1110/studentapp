@@ -71,6 +71,7 @@ public class Student_Feedback extends Fragment implements View.OnClickListener {
                 feedback.put("message",feedbackedit.getText().toString() );
                 feedback.put("rollNo", rollNo);
                 feedback.put("createdDate",d);
+                feedback.put("isReply",false);
                 db.collection("feedbacks").document()
                         .set(feedback)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

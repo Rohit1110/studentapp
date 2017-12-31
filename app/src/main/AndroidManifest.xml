@@ -18,6 +18,17 @@
         android:roundIcon="@mipmap/shauicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            android:authorities="${applicationId}.provider">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths"/>
+
+        </provider>
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Signup" />

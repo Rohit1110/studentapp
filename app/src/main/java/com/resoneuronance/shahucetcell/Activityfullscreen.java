@@ -12,15 +12,18 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -136,29 +139,15 @@ public class Activityfullscreen extends AppCompatActivity  implements ActivityCo
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
-
-                    // System.out.println("OnSuccess=>> " + xmlFile.getAbsolutePath());
-
-                    /*Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    //proDialog.dismiss();
-                    finish();
-            */
-
-
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setAction(Intent.ACTION_VIEW);
+                    Uri uri=FileProvider.getUriForFile(Activityfullscreen.this,BuildConfig.APPLICATION_ID + ".provider",pdfFile);
+                    intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension("image*//*"));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
-                    finish();
+                     finish();
 
-           /* Glide.with(Activityfullscreen.this)
-                    .load(imgUrl)
 
-                    .into(img);
-            proDialog.dismiss();*/
 
                 }
 
@@ -217,10 +206,39 @@ public class Activityfullscreen extends AppCompatActivity  implements ActivityCo
             final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
             final File pdfFile = new File(logFolder, examname+"Omr.jpg");
+/*
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(pdfFile), "image*//*");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();*/
+
+         /*   // create new Intent
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+// set flag to give temporary permission to external app to use your FileProvider
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+// generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+
+
+// I am opening a PDF file so I give it a valid MIME type
+            intent.setDataAndType(FileProvider.getUriForFile(Activityfullscreen.this, BuildConfig.APPLICATION_ID+".provider", pdfFile), "image*//**//*");
+
+// validate that the device can open your File!
+            PackageManager pm = getPackageManager();
+            if (intent.resolveActivity(pm) != null) {
+                startActivity(intent);
+                finish();
+
+            }*/
+
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(pdfFile), "image/*");
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri uri=FileProvider.getUriForFile(Activityfullscreen.this,BuildConfig.APPLICATION_ID + ".provider",pdfFile);
+            intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension("image*//*"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
             finish();
         }

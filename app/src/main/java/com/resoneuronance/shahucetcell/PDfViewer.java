@@ -1,17 +1,21 @@
 package com.resoneuronance.shahucetcell;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,10 +83,11 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
                     .show();*/
         //Toast.makeText(PDfViewer.this,"Permission Grant",Toast.LENGTH_LONG).show();
         } else {
-            Log.i(TAG, "Contacts permissions were NOT granted.");
+            /*Log.i(TAG, "Contacts permissions were NOT granted.");
             Snackbar.make(mLayout, "permissions were NOT granted",
                     Snackbar.LENGTH_SHORT)
-                    .show();
+                    .show();*/
+            Toast.makeText(PDfViewer.this,"Permission not Grant",Toast.LENGTH_LONG).show();
         }
 
 
@@ -91,8 +96,8 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_pdf_viewer);
-       // img = (ImageView) findViewById(R.id.temp);
+        // setContentView(R.layout.activity_pdf_viewer);
+        // img = (ImageView) findViewById(R.id.temp);
         // Here, thisActivity is the current activity
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
@@ -107,8 +112,8 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
         if (bundle != null) {
 
             examId = bundle.getString("examid");
-            examname=bundle.getString("testname");
-            System.out.println("Exam Id" + examId+"  "+examname);
+            examname = bundle.getString("testname");
+            System.out.println("Exam Id" + examId + "  " + examname);
 
             proDialog = new ProgressDialog(PDfViewer.this);
             proDialog.setMessage("please wait .....");
@@ -116,13 +121,11 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
             proDialog.show();
 
         }
-       if(Utility.isInternetOn(PDfViewer.this)) {
-           // requeststoragepermission();
+        if (Utility.isInternetOn(PDfViewer.this)) {
+            // requeststoragepermission();
 
 
-
-
-           docRef = db.collection("exams").document(examId)
+            docRef = db.collection("exams").document(examId)
 
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
 
@@ -139,7 +142,7 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
                                 System.out.println("Data For PDF +>>" + documentSnapshot.getData());
                                 Url = documentSnapshot.getString("paperSolutionExamFileUrl");
                                 System.out.println("Url paper ==>> " + Url);
-
+                                Toast.makeText(PDfViewer.this, "Url Pdf " + Url, Toast.LENGTH_SHORT).show();
 
                                 httpsReference = storage.getReferenceFromUrl(Url);
 
@@ -152,27 +155,39 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
                                         .getPath()));
                                 System.out.println("File path online: "+xmlFile);*/
 
-                               if (!logFolder.exists()) {
+                                if (!logFolder.exists()) {
                                     logFolder.mkdirs();
                                     System.out.println("Directory created ...");
                                 }
 
-                                final File pdfFile = new File(logFolder, examname+".pdf");
-                              //final File pdfFile=xmlFile;
-                                System.out.println("File PDF===>>>"+ pdfFile);
+                                final File pdfFile = new File(logFolder, examname + ".pdf");
+                                //final File pdfFile=xmlFile;
+                                System.out.println("File PDF===>>>" + pdfFile);
+                                Toast.makeText(PDfViewer.this, "File Path " + pdfFile, Toast.LENGTH_LONG).show();
                                 httpsReference.getFile(pdfFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
 
-                                       // System.out.println("OnSuccess=>> " + xmlFile.getAbsolutePath());
-
+                                        // create new Intent
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        //proDialog.dismiss();
-                                        finish();
+
+// set flag to give temporary permission to external app to use your FileProvider
+                                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+// generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+
+
+// I am opening a PDF file so I give it a valid MIME type
+                                        intent.setDataAndType(FileProvider.getUriForFile(PDfViewer.this, BuildConfig.APPLICATION_ID+".provider", pdfFile), "application/pdf");
+
+// validate that the device can open your File!
+                                        PackageManager pm = getPackageManager();
+                                        if (intent.resolveActivity(pm) != null) {
+                                            startActivity(intent);
+                                            finish();
+
+                                        }
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -192,22 +207,36 @@ public class PDfViewer extends AppCompatActivity  implements ActivityCompat.OnRe
 
                         }
                     });
-          // proDialog.dismiss();
-     }else {
-           //proDialog.dismiss();
-           final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
+            // proDialog.dismiss();
+        } else {
+            proDialog.dismiss();
+            final File logFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Exams");
 
-            final File pdfFile = new File(logFolder, examname+".pdf");
+            final File pdfFile = new File(logFolder, examname + ".pdf");
 
-            System.out.println("File PDF===>>>"+ pdfFile);
+            System.out.println("File PDF===>>>" + pdfFile);
+
+            // create new Intent
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+
+// set flag to give temporary permission to external app to use your FileProvider
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+// generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
+
+
+// I am opening a PDF file so I give it a valid MIME type
+            intent.setDataAndType(FileProvider.getUriForFile(PDfViewer.this, BuildConfig.APPLICATION_ID+".provider", pdfFile), "application/pdf");
+
+// validate that the device can open your File!
+            PackageManager pm = getPackageManager();
+            if (intent.resolveActivity(pm) != null) {
+                startActivity(intent);
+                finish();
+
+            }
+
         }
-
-
     }
 
 

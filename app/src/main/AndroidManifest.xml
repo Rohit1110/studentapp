@@ -44,6 +44,7 @@
         <activity android:name=".ProgressViewActivity" />
         <activity android:name=".AnalysisShow" />
         <activity android:name=".PDfViewer" />
+        <activity android:name=".TimeTableview" />
         <activity android:name=".Profile_StudentActivity" />
         <activity android:name=".CorrectkeyShow"></activity>
     </application>

@@ -152,6 +152,10 @@ public class MainActivity extends AppCompatActivity
            fragment = new Student_Feedback();
 
        }
+       else if (id == R.id.nav_timetable) {
+           fragment = new TimeTable();
+
+       }
         else if (id == R.id.nav_pofile) {
             fragment = new Student_Profile();
 

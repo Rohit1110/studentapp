@@ -1,0 +1,139 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dip"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_question"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:text="Question"
+        android:textColor="#212121"/>
+
+    <TextView
+        android:id="@+id/txt_opt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="pot1"
+        android:layout_margin="10dp"
+        android:textColor="#757575"
+        android:layout_below="@+id/gnotice" />
+        <TextView
+            android:id="@+id/txt_opt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="14sp"
+            android:text="pot2"
+            android:textColor="#757575"
+            android:layout_below="@+id/gnotice" />
+        <TextView
+            android:id="@+id/txt_opt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="10dp"
+            android:text="pot3"
+            android:textColor="#757575"
+            android:layout_below="@+id/gnotice" />
+        <TextView
+            android:id="@+id/txt_opt4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="pot4"
+            android:layout_margin="10dp"
+            android:textColor="#757575"
+            android:layout_below="@+id/gnotice" />
+
+
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txt_correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Correct Answers : "
+            android:layout_margin="10dp"
+            android:textColor="#212121"
+            android:layout_below="@+id/gnotice" />
+        <TextView
+            android:id="@+id/txt_corrected_ans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="10dp"
+            android:text="pot4"
+            android:textColor="#757575"
+            android:layout_below="@+id/gnotice" />
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txt_waitage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Weightage : "
+                android:layout_margin="10dp"
+                android:textColor="#212121"
+                android:layout_below="@+id/gnotice" />
+            <TextView
+                android:id="@+id/txt_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_margin="10dp"
+                android:text="pot4"
+                android:textColor="#757575"
+                android:layout_below="@+id/gnotice" />
+
+            <TextView
+                android:id="@+id/txt_ttl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Nagative Marks: "
+                android:layout_margin="10dp"
+                android:textColor="#212121"
+                android:layout_below="@+id/gnotice" />
+            <TextView
+                android:id="@+id/txt_neg_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_margin="10dp"
+                android:text="pot4"
+                android:textColor="#757575"
+                android:layout_below="@+id/gnotice" />
+
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
+</RelativeLayout>

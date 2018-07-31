@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity
                                 SharedPreferences preferences = getSharedPreferences("pref", 0);
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putString("rollno", document.getData().get("RollNo").toString());
+                                editor.putString("sclass",document.getData().get("Class").toString());
                                 editor.commit();
 
 
@@ -153,13 +153,21 @@ public class MainActivity extends AppCompatActivity
 
        }
        else if (id == R.id.nav_timetable) {
-           fragment = new TimeTable();
+           Intent i =new Intent(MainActivity.this,TimeTableview.class);
+           startActivity(i);
+
+       }
+       else if (id == R.id.nav_quepaper) {
+           fragment = new Student_QuestionPaper();
 
        }
         else if (id == R.id.nav_pofile) {
             fragment = new Student_Profile();
 
-        } else if (id == R.id.nav_logout) {
+        }else if (id == R.id.nav_test_result) {
+           fragment = new TestResult();
+
+       } else if (id == R.id.nav_logout) {
           /* Intent i =new Intent(MainActivity.this,PhoneAuthActivity.class);
            startActivity(i);*/
             FirebaseAuth.getInstance().signOut();
